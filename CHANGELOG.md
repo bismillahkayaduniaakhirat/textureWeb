@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.2.1] - 2026-11-23
+
+Developer: Achmad Yukrisna
+
+### Fixed
+- `/grandtexavenue/` redirect loop (Netlify treats `/grandtexavenue` and `/grandtexavenue/` as one path).
+
 ## [1.2.0] - 2026-11-23
 
 Developer: Achmad Yukrisna

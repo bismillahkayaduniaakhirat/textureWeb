@@ -1,5 +1,4 @@
 # Grand Tex Avenue: served live from its own Netlify project, so one deploy there updates both.
-/grandtexavenue            /grandtexavenue/  301!
 /grandtexavenue/*          https://texturegameavenue.netlify.app/:splat  200!
 # Old game URL: keep links working.
 /grandtextureauto          /grandtexavenue/  301!
