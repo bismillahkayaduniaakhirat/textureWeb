@@ -1,5 +1,16 @@
 # Changelog
 
+## [1.2.0] - 2026-11-23
+
+Developer: Achmad Yukrisna
+
+### Changed
+- Game URL moves to `texturecoffee.id/grandtexavenue/`, served from the `texturegameavenue.netlify.app` project instead of `serene-fairy-1cce73.netlify.app`.
+- "Grand Tex Avenue" button now links to `/grandtexavenue/`.
+
+### Added
+- Old `/grandtextureauto/` links redirect (301) to `/grandtexavenue/`.
+
 ## [1.1.0] - 2026-11-23
 
 Developer: Achmad Yukrisna

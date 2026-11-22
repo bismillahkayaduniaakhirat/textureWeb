@@ -1,2 +1,6 @@
-# Game OOT Street: served live from the main game site, so one upload there updates both.
-/grandtextureauto/*  https://serene-fairy-1cce73.netlify.app/:splat  200!
+# Grand Tex Avenue: served live from its own Netlify project, so one deploy there updates both.
+/grandtexavenue            /grandtexavenue/  301!
+/grandtexavenue/*          https://texturegameavenue.netlify.app/:splat  200!
+# Old game URL: keep links working.
+/grandtextureauto          /grandtexavenue/  301!
+/grandtextureauto/*        /grandtexavenue/:splat  301!
