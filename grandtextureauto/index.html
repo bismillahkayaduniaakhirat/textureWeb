@@ -1,0 +1,195 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<script>/* texturecoffee.id/grandtextureauto needs the trailing slash so relative files load */if(/\/grandtextureauto$/.test(location.pathname))location.replace(location.pathname+'/'+location.search+location.hash);</script>
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
+<meta name="theme-color" content="#1a0f08">
+<title>OOT Street — Kediri</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bungee&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<script type="importmap">
+{ "imports": { "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js", "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/" } }
+</script>
+</head>
+<body>
+<canvas id="game"></canvas>
+
+<!-- HUD -->
+<div id="hud" class="hidden">
+  <div id="topRight">
+    <div id="clock">18:00</div>
+    <div id="coins"><span class="coinIcon">◉</span><span id="coinVal">0</span></div>
+    <div id="daily">Hari ini: <span id="dailyVal">0</span>/<span id="dailyCap">0</span></div>
+    <div id="hp"><span>♥</span><div id="hpBar"><div id="hpFill"></div></div></div>
+  </div>
+  <button id="radarWrap" title="Buka peta (M)"><canvas id="radar" width="160" height="160"></canvas><span class="radarTag">PETA</span></button>
+  <div id="areaName"></div>
+  <div id="missionBar" class="hidden"><div id="missionTitle"></div><div id="missionInfo"></div><div id="missionTimer"></div></div>
+  <div id="hurt"></div>
+  <div id="toast" class="hidden"></div>
+  <div id="bigText" class="hidden"></div>
+  <button id="btnStore" class="topBtn">OOT STORE</button>
+  <button id="btnMute" class="topBtn small">♪</button>
+  <!-- touch controls -->
+  <div id="stick"><div id="knob"></div></div>
+  <div id="actBtns">
+    <button id="btnRun" class="act">LARI</button>
+    <button id="btnEnter" class="act">MOTOR</button>
+    <button id="btnJump" class="act">LOMPAT</button>
+  </div>
+  <button id="btnPoster" class="hidden">LIHAT POSTER <small>[E]</small></button>
+  <div id="keysHint">WASD gerak · Shift lari · Space lompat · F naik/turun motor · M peta · Drag mouse putar kamera</div>
+</div>
+
+<!-- Prompt for mission start -->
+<div id="prompt" class="modal hidden">
+  <div class="card">
+    <div class="tag">MISI</div>
+    <h2 id="pTitle"></h2>
+    <p id="pDesc"></p>
+    <div class="row"><button id="pNo" class="ghost">Nanti</button><button id="pYes">MULAI</button></div>
+  </div>
+</div>
+
+<!-- Partner coffee shop (rows in Supabase game_places) -->
+<div id="placeCard" class="modal hidden">
+  <div class="card place">
+    <div class="tag">TEMPAT NONGKRONG</div>
+    <h2 id="plName"></h2>
+    <p id="plAddr"></p>
+    <a id="plIg" class="btnLink" target="_blank" rel="noopener">INSTAGRAM <span id="plIgName"></span></a>
+    <a id="plMaps" class="btnLink alt" target="_blank" rel="noopener">BUKA DI GOOGLE MAPS</a>
+    <button id="plClose" class="ghost full">Lanjut main</button>
+  </div>
+</div>
+
+<!-- Poster preview -->
+<div id="posterView" class="modal hidden">
+  <div class="card poster">
+    <div class="tag">POSTER · <span id="pvCount"></span></div>
+    <h2 id="pvTitle"></h2>
+    <div class="pvWrap"><button id="pvPrev" class="ghost">‹</button><img id="pvImg" alt="Poster OOT Garage Sale"><button id="pvNext" class="ghost">›</button></div>
+    <div class="row"><button id="pvClose" class="ghost">Tutup</button><a id="pvDl" class="btnLink" download>DOWNLOAD</a></div>
+  </div>
+</div>
+
+<!-- Store -->
+<div id="store" class="modal hidden">
+  <div class="card wide">
+    <div class="storeHead">
+      <div><div class="tag">TUKAR KOIN</div><h2>OOT STORE</h2></div>
+      <div class="pill"><span class="coinIcon">◉</span> <span id="storeCoins">0</span></div>
+    </div>
+    <div class="tabs"><button data-tab="items" class="on">Hadiah</button><button data-tab="vouchers">Voucher Saya</button><button data-tab="nota">Tukar Nota</button><button data-tab="board">Peringkat</button></div>
+    <div id="storeItems" class="grid"></div>
+    <div id="storeVouchers" class="vlist hidden"></div>
+    <div id="storeNota" class="hidden">
+      <p>Belanja di <b>Texture Coffee</b> atau beli <b>merch OOT</b>, minta <b>kode nota</b> ke kasir, lalu masukkan di sini. 500 Texture Points = 1 koin.</p>
+      <div class="notaRow"><input id="notaCode" placeholder="TXR-XXXX-XXXX" autocomplete="off" autocapitalize="characters" spellcheck="false"><button id="notaGo">TUKAR</button></div>
+      <p id="notaMsg" class="muted"></p>
+      <table class="rates"><tr><th>Texture Points</th><th>Koin</th></tr><tr><td>10.000</td><td>20</td></tr><tr><td>25.000</td><td>50</td></tr><tr><td>50.000</td><td>100</td></tr><tr><td>100.000</td><td>200</td></tr><tr><td>250.000</td><td>500</td></tr><tr><td>300.000</td><td>600</td></tr></table>
+    </div>
+    <div id="storeBoard" class="hidden">
+      <div id="prizeInfo" class="muted"></div>
+      <ol id="boardList" class="board"></ol>
+    </div>
+    <p id="storeAcct" class="acct storeAcct"></p>
+    <button id="storeClose" class="ghost full">Tutup</button>
+  </div>
+</div>
+
+<!-- Voucher result -->
+<div id="voucher" class="modal hidden">
+  <div class="card">
+    <div class="tag">VOUCHER BERHASIL</div>
+    <h2 id="vName"></h2>
+    <div id="vCode"></div>
+    <p class="muted" id="vNote"></p>
+    <button id="vOk">OKE</button>
+  </div>
+</div>
+
+<!-- Full map -->
+<div id="mapView" class="modal hidden">
+  <div class="mapCard">
+    <canvas id="mapCanvas"></canvas>
+    <div class="mapBar">
+      <div class="tag">PETA KOTA KEDIRI</div>
+      <div class="mapBtns"><button id="mapTexture" title="Texture Coffee">T</button><button id="mapCenter" title="Posisi kamu">◎</button><button id="mapZoomOut">−</button><button id="mapZoomIn">+</button><button id="mapClose" class="close">TUTUP</button></div>
+    </div>
+  </div>
+</div>
+
+<!-- Login -->
+<div id="auth" class="modal hidden">
+  <div class="card">
+    <div class="tag">AKUN PEMAIN</div>
+    <div id="authProfile" class="aStep">
+      <h2 id="aTitle">Daftar Pemain</h2>
+      <p>Nama tampil di leaderboard. Nomor HP dan email untuk menghubungi pemenang, tidak ditampilkan. Email + password dipakai untuk masuk lagi di HP lain.</p>
+      <input id="aName" maxlength="24" placeholder="Nama panggilan" autocomplete="nickname">
+      <input id="aPhone" type="tel" placeholder="08xxxxxxxxxx" autocomplete="tel">
+      <input id="aEmail" type="email" placeholder="email@kamu.com" autocomplete="email">
+      <input id="aPass" type="password" placeholder="Buat password (min. 6 karakter)" autocomplete="new-password">
+      <div class="row"><button id="aCancel" class="ghost">Batal</button><button id="aSave">SIMPAN</button></div>
+      <p class="aSwitch" id="aToLoginP">Sudah punya akun? <a id="aToLogin">Masuk</a></p>
+    </div>
+    <div id="authLogin" class="aStep hidden">
+      <h2>Masuk</h2>
+      <p>Pakai email dan password yang kamu buat waktu daftar. Koin dan peringkat kamu ikut.</p>
+      <input id="lEmail" type="email" placeholder="email@kamu.com" autocomplete="email">
+      <input id="lPass" type="password" placeholder="Password" autocomplete="current-password">
+      <div class="row"><button id="lCancel" class="ghost">Batal</button><button id="lGo">MASUK</button></div>
+      <p class="aSwitch">Belum punya akun? <a id="aToSignup">Daftar</a><br>Lupa password? Hubungi admin OOT.</p>
+    </div>
+    <p id="aMsg" class="muted"></p>
+  </div>
+</div>
+
+<!-- Guest warning: shown before playing without an account -->
+<div id="guestWarn" class="modal hidden">
+  <div class="card">
+    <h2>Main tanpa login?</h2>
+    <p><b>Koin kamu tidak tersimpan.</b> Koin hilang begitu halaman ditutup, tidak masuk peringkat, dan tidak bisa tukar nota atau voucher merch.</p>
+    <p>Daftar cuma butuh nama, nomor HP, dan email. Tanpa kode verifikasi.</p>
+    <button id="gwLogin" class="full">DAFTAR DULU</button>
+    <button id="gwPlay" class="ghost full">Tetap main tanpa login</button>
+  </div>
+</div>
+
+<!-- Yes/no box (in-page: native confirm() is blocked in some in-app browsers) -->
+<div id="askBox" class="modal hidden">
+  <div class="card">
+    <h2 id="askTitle"></h2>
+    <p id="askText"></p>
+    <button id="askOk" class="full"></button>
+    <button id="askNo" class="ghost full">Batal</button>
+  </div>
+</div>
+
+<!-- Title screen -->
+<div id="title">
+  <div class="titleBg"></div>
+  <div class="titleInner">
+    <div class="logo">OOT<span>STREET</span></div>
+    <div class="sub">KEDIRI · GARAGE SALE EDITION</div>
+    <ul class="how">
+      <li>Jalan-jalan keliling kota, ambil <b>koin OOT</b> yang tersebar.</li>
+      <li>Masuk ke <b>penanda kuning</b> untuk mulai misi dari Texture Coffee.</li>
+      <li>Tukar koin di <b>OOT STORE</b> jadi voucher merch asli.</li>
+    </ul>
+    <div id="acct" class="acct"></div>
+    <button id="btnPlay">MAIN SEKARANG</button>
+    <button id="btnLogin" class="hidden">MASUK / DAFTAR</button>
+    <button id="btnGuest" class="ghostBtn hidden">Main tanpa login (koin tidak tersimpan)</button>
+    <div class="rotate">Putar HP ke mode landscape biar lebih enak 📱↻</div>
+  </div>
+</div>
+
+<div id="loading">MEMUAT…</div>
+
+<script type="module" src="main.js"></script>
+</body>
+</html>
