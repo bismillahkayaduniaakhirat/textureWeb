@@ -172,6 +172,10 @@
     .top .back.phone-only { display: inline-flex !important; visibility: hidden; }
   }
 </style>
+<script>
+  // Halaman ini khusus desktop. Di HP (layar di bawah 900px) tampilkan linktree.
+  if (!matchMedia('(min-width: 900px)').matches) location.replace('/');
+</script>
 </head>
 <body>
 

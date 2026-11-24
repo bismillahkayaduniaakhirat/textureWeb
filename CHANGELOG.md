@@ -1,5 +1,16 @@
 # Changelog
 
+## [1.4.4] - 2026-11-24
+
+Developer: Achmad Yukrisna
+
+### Fixed
+- Phones now always get the original linktree home. Opening `/menu/` on a screen narrower than 900px redirects to `/`.
+
+### Changed
+- Linktree "Menu" button opens the menu PDF pages in the in-page viewer again (as before 1.3.0), instead of going to `/menu/`.
+- `/menu/` is now the desktop-only home page.
+
 ## [1.4.3] - 2026-11-24
 
 Developer: Achmad Yukrisna
