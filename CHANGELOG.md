@@ -1,5 +1,21 @@
 # Changelog
 
+## [1.4.2] - 2026-11-24
+
+Developer: Achmad Yukrisna
+
+### Fixed
+- Stray "MENU" breadcrumb at the top of the hero on desktop. The breadcrumb ("Home / Menu") now shows on phones only.
+
+### Changed
+- Photo gallery on the menu page shows only photos of the cafe itself (street front, entrance, terrace, dining hall, window tables, bar, arch, rooftop, side seating). Food and drink photos are no longer in the gallery, since the menu cards below already show them.
+
+### Added
+- 7 more cafe photos from the Google Maps reviews in `assets/place/` (street, entrance, terrace, hall, tables, rooftop, sidewalk).
+
+### Removed
+- `assets/place/barista.webp` (no longer used).
+
 ## [1.4.1] - 2026-11-24
 
 Developer: Achmad Yukrisna
