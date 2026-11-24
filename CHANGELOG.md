@@ -1,5 +1,14 @@
 # Changelog
 
+## [1.4.3] - 2026-11-24
+
+Developer: Achmad Yukrisna
+
+### Changed
+- Scroll indicator on the menu page hero now bobs up and down as a whole, not only the dot inside it.
+- Scroll indicator keeps moving even when the device has animations turned off (reduced motion).
+- Darker overlay on the hero photo, so the title and header read better.
+
 ## [1.4.2] - 2026-11-24
 
 Developer: Achmad Yukrisna
