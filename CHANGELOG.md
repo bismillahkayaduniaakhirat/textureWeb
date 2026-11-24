@@ -1,5 +1,21 @@
 # Changelog
 
+## [1.4.0] - 2026-11-24
+
+Developer: Achmad Yukrisna
+
+### Added
+- Cafe photos from the Texture Coffee Google Maps listing in `assets/place/` (front, interior, bar, window seats, arch, barista, iced coffee, snack, cold drink).
+- "More from texture" section on the menu page with the home page links: Frugal Treats, Location, Textunes, Grand Tex Avenue, Shopee, Tokopedia and Tiktokshop.
+- Desktop header navigation on the menu page: Menu, More, Reservasi.
+
+### Changed
+- Menu page hero now shows the cafe front instead of a menu PDF crop.
+- Gallery now shows the cafe interior and drinks first, then the food photos.
+- Snack, Signature Coffee and Cold Selection cards use the new photos.
+- Home page (linktree) shows only on phones. On screens 900px and wider it redirects to `/menu/`. Add `?links` to the URL to open the linktree on desktop.
+- On desktop the menu page hides the "Home" back link, so it does not lead back to the redirect.
+
 ## [1.3.0] - 2026-11-24
 
 Developer: Achmad Yukrisna

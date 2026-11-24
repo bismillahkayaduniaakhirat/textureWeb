@@ -140,6 +140,11 @@
   }
   body.locked { overflow: hidden; }
 </style>
+<script>
+  // Linktree hanya untuk HP. Layar lebar (desktop/tablet landscape) langsung ke halaman menu.
+  // Tambah ?links di URL untuk tetap membuka linktree di desktop.
+  if (matchMedia('(min-width: 900px)').matches && !/[?&]links/.test(location.search)) location.replace('/menu/' + location.hash);
+</script>
 </head>
 <body>
 <main class="card">
