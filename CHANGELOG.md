@@ -1,5 +1,17 @@
 # Changelog
 
+## [1.3.0] - 2026-11-24
+
+Developer: Achmad Yukrisna
+
+### Added
+- New menu page at `/menu/`: hero photo, intro, photo gallery with arrows, and one card per menu category (Main Course, Snack, Dessert, Signature Coffee, Cold Selection, Frugal Treats).
+- Each card's "View menu" opens that category's PDF pages in an in-page viewer; "Reservasi" opens WhatsApp.
+- Card photos cropped from the menu PDF pages into `assets/cards/`.
+
+### Changed
+- Home page "Menu" button now opens `/menu/` instead of the in-page PDF viewer.
+
 ## [1.2.1] - 2026-11-23
 
 Developer: Achmad Yukrisna
