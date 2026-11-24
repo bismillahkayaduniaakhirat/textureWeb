@@ -47,7 +47,7 @@
   .top .logo { width: 40px; height: 40px; border-radius: 50%; object-fit: cover; }
 
   /* Hero */
-  .hero { position: relative; height: min(88vh, 760px); min-height: 460px; overflow: hidden; background: #2a241c; }
+  .hero { position: relative; height: 100vh; height: 100svh; min-height: 460px; overflow: hidden; background: #2a241c; }
   .hero img { width: 100%; height: 100%; object-fit: cover; }
   .hero::after {
     content: ""; position: absolute; inset: 0;
@@ -58,6 +58,18 @@
   .hero-title { position: absolute; left: 0; right: 0; bottom: 40px; z-index: 1; text-align: center; color: #fff; }
   .hero-title h1 { font-size: clamp(40px, 9vw, 76px); font-weight: 700; line-height: 1; letter-spacing: .14em; }
   .hero-title p { margin-top: 12px; font-size: 16px; }
+  .hero-title { bottom: 96px; }
+  /* Tanda scroll di bawah hero */
+  .scroll-cue {
+    position: absolute; left: 50%; bottom: 28px; z-index: 1; transform: translateX(-50%);
+    width: 24px; height: 38px; border: 1.5px solid #fff; border-radius: 12px;
+  }
+  .scroll-cue::after {
+    content: ""; position: absolute; left: 50%; top: 7px; width: 3px; height: 8px; margin-left: -1.5px;
+    border-radius: 2px; background: #fff; animation: cue 1.6s ease-in-out infinite;
+  }
+  @keyframes cue { 0% { opacity: 0; transform: translateY(0); } 40% { opacity: 1; } 100% { opacity: 0; transform: translateY(12px); } }
+  @media (prefers-reduced-motion: reduce) { .scroll-cue::after { animation: none; } }
 
   /* Intro */
   .intro { padding-top: 48px; padding-bottom: 8px; max-width: 760px; }
@@ -182,10 +194,11 @@
     <h1>TEXTURE</h1>
     <p class="serif">Feel the Pleasure in every Texture</p>
   </div>
+  <a class="scroll-cue" href="#intro" aria-label="Gulir ke bawah"></a>
 </section>
 
 <main>
-  <section class="wrap intro">
+  <section class="wrap intro" id="intro">
     <p>Located in a historic corner of Kediri, <strong>Texture Coffee</strong> is a cozy place that beautifully blends tradition with modernity. Nestled within a building that echoes the city heritage, this cafe offers a unique ambiance where the past meets the present.</p>
     <p>The menu is entirely homemade, crafted with love and expertise by local talent who bring a deep understanding of Nusantara's culinary roots to every dish and cup of coffee.</p>
     <div class="actions">

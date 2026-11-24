@@ -1,5 +1,16 @@
 # Changelog
 
+## [1.4.1] - 2026-11-24
+
+Developer: Achmad Yukrisna
+
+### Changed
+- Menu page hero now fills the whole screen on phones and desktop (was capped at 760px).
+- Hero title moved up to make room for the scroll indicator.
+
+### Added
+- Animated scroll indicator at the bottom of the hero; tapping it scrolls to the intro.
+
 ## [1.4.0] - 2026-11-24
 
 Developer: Achmad Yukrisna
