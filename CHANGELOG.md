@@ -1,5 +1,80 @@
 # Changelog
 
+## [1.4.4] - 2026-11-24
+
+Developer: Achmad Yukrisna
+
+### Fixed
+- Phones now always get the original linktree home. Opening `/menu/` on a screen narrower than 900px redirects to `/`.
+
+### Changed
+- Linktree "Menu" button opens the menu PDF pages in the in-page viewer again (as before 1.3.0), instead of going to `/menu/`.
+- `/menu/` is now the desktop-only home page.
+
+## [1.4.3] - 2026-11-24
+
+Developer: Achmad Yukrisna
+
+### Changed
+- Scroll indicator on the menu page hero now bobs up and down as a whole, not only the dot inside it.
+- Scroll indicator keeps moving even when the device has animations turned off (reduced motion).
+- Darker overlay on the hero photo, so the title and header read better.
+
+## [1.4.2] - 2026-11-24
+
+Developer: Achmad Yukrisna
+
+### Fixed
+- Stray "MENU" breadcrumb at the top of the hero on desktop. The breadcrumb ("Home / Menu") now shows on phones only.
+
+### Changed
+- Photo gallery on the menu page shows only photos of the cafe itself (street front, entrance, terrace, dining hall, window tables, bar, arch, rooftop, side seating). Food and drink photos are no longer in the gallery, since the menu cards below already show them.
+
+### Added
+- 7 more cafe photos from the Google Maps reviews in `assets/place/` (street, entrance, terrace, hall, tables, rooftop, sidewalk).
+
+### Removed
+- `assets/place/barista.webp` (no longer used).
+
+## [1.4.1] - 2026-11-24
+
+Developer: Achmad Yukrisna
+
+### Changed
+- Menu page hero now fills the whole screen on phones and desktop (was capped at 760px).
+- Hero title moved up to make room for the scroll indicator.
+
+### Added
+- Animated scroll indicator at the bottom of the hero; tapping it scrolls to the intro.
+
+## [1.4.0] - 2026-11-24
+
+Developer: Achmad Yukrisna
+
+### Added
+- Cafe photos from the Texture Coffee Google Maps listing in `assets/place/` (front, interior, bar, window seats, arch, barista, iced coffee, snack, cold drink).
+- "More from texture" section on the menu page with the home page links: Frugal Treats, Location, Textunes, Grand Tex Avenue, Shopee, Tokopedia and Tiktokshop.
+- Desktop header navigation on the menu page: Menu, More, Reservasi.
+
+### Changed
+- Menu page hero now shows the cafe front instead of a menu PDF crop.
+- Gallery now shows the cafe interior and drinks first, then the food photos.
+- Snack, Signature Coffee and Cold Selection cards use the new photos.
+- Home page (linktree) shows only on phones. On screens 900px and wider it redirects to `/menu/`. Add `?links` to the URL to open the linktree on desktop.
+- On desktop the menu page hides the "Home" back link, so it does not lead back to the redirect.
+
+## [1.3.0] - 2026-11-24
+
+Developer: Achmad Yukrisna
+
+### Added
+- New menu page at `/menu/`: hero photo, intro, photo gallery with arrows, and one card per menu category (Main Course, Snack, Dessert, Signature Coffee, Cold Selection, Frugal Treats).
+- Each card's "View menu" opens that category's PDF pages in an in-page viewer; "Reservasi" opens WhatsApp.
+- Card photos cropped from the menu PDF pages into `assets/cards/`.
+
+### Changed
+- Home page "Menu" button now opens `/menu/` instead of the in-page PDF viewer.
+
 ## [1.2.1] - 2026-11-23
 
 Developer: Achmad Yukrisna
