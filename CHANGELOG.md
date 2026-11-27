@@ -1,5 +1,29 @@
 # Changelog
 
+## [1.5.11] - 2026-11-27
+
+Developer: Achmad Yukrisna
+
+### Changed
+- Photo slide buttons use the client's drawn buttons and dot from `ICON SLIDE.png`.
+- Phone: the OOT banner shows the client's text image from `PENJELASAN OOT KECIL.png` at the bottom of the photo.
+
+### Fixed
+- Desktop footer: the address "01 Dr. Wahidin Street, Kediri" and the Instagram/TikTok icons were invisible. The row sits at the very bottom of the page, so the scroll reveal (−8% bottom margin) never fired. Footer items now use their own observer.
+- Desktop Tiktokshop card opened a blank tab. The short link redirects to the TikTok app (`snssdk1180://`), which a computer cannot open, and TikTok Shop Indonesia has no web store page. On desktop the card now shows a QR code to scan with a phone. On phones the link opens the app as before.
+
+### Added
+- `assets/v2/slide-l.webp`, `slide-r.webp`, `slide-dot.webp`, `oot-note-m.webp`, `tiktokshop-qr.svg`.
+
+## [1.5.10] - 2026-11-27
+
+Developer: Achmad Yukrisna
+
+### Changed
+- Opening loader background is now the client's red #601708, instead of brown #592622.
+- Phone: the dashed line at the bottom of the hero is cream. After you scroll past the hero, the header shows its dashed line in red-brown.
+- Scroll mouse icon: the frame stays still, and only the small dot inside moves up and down.
+
 ## [1.5.9] - 2026-11-27
 
 Developer: Achmad Yukrisna
