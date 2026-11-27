@@ -56,18 +56,28 @@
     font-size: 16px; letter-spacing: .06em;
     transition: opacity .25s;
   }
-  .head .nav a { justify-self: center; padding: 4px 8px; }
-  .head .nav a:hover { text-decoration: underline; text-underline-offset: 6px; }
+  .head .nav a { justify-self: center; padding: 4px 0; position: relative; }
+  .head .nav a::before { /* garis bawah menyapu, ala Union */
+    content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 1.5px; background: currentColor;
+    transform: scaleX(0); transform-origin: 100% 50%; transition: transform .35s cubic-bezier(.25,.46,.45,.94);
+  }
+  .head .nav a:hover::before, .head .nav a:focus-visible::before { transform: scaleX(1); transform-origin: 0 50%; }
   .head.solid { background: var(--cream); color: var(--brown); box-shadow: 0 10px 18px -8px rgba(89, 38, 34, .18); }
   .head.solid .nav { opacity: 0; height: 0; padding: 0; overflow: hidden; pointer-events: none; }
 
   /* ---------- Hero ---------- */
   .hero {
     position: relative; height: 100vh; height: 100svh; min-height: 520px;
-    background: #111 url(/assets/v2/hero.webp) center 66% / cover no-repeat;
+    background: #111; overflow: hidden;
     color: #fff; display: flex; flex-direction: column; align-items: center; justify-content: flex-end;
     padding-bottom: 6vh; isolation: isolate;
   }
+  .hero-bg {
+    position: absolute; inset: 0; z-index: -2;
+    background: url(/assets/v2/hero.webp) center 66% / cover no-repeat;
+  }
+  .anim .hero-bg { animation: zoomInSm 1.2s cubic-bezier(.76,0,.24,1) .2s both; }
+  @keyframes zoomInSm { from { transform: scale(1.2); } to { transform: scale(1); } }
   .hero::before { /* vignette */
     content: ""; position: absolute; inset: 0; z-index: -1;
     background:
@@ -82,7 +92,12 @@
   .mouse span { width: 10px; height: 6px; border-radius: 6px 6px 2px 2px; background: #fff; animation: wheel 1.8s ease-in-out infinite; }
   @keyframes bob { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(8px); } }
   @keyframes wheel { 0% { opacity: 1; transform: translateY(0); } 70% { opacity: 0; transform: translateY(12px); } 100% { opacity: 0; } }
-  .hero .logo { width: 89px; height: auto; margin-bottom: 26px; }
+  .hero .logo { display: block; width: 104px; height: auto; margin-bottom: 20px; }
+  .anim .hero .mouse, .anim .hero .logo, .anim .hero .tagline { opacity: 0; animation: heroIn .9s cubic-bezier(.25,.46,.45,.94) both; }
+  .anim .hero .logo { animation-delay: .9s; }
+  .anim .hero .tagline { animation-delay: 1.05s; }
+  .anim .hero .mouse { animation: heroIn .9s cubic-bezier(.25,.46,.45,.94) 1.2s both, bob 1.8s ease-in-out 2.1s infinite; }
+  @keyframes heroIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
   .tagline { font-size: 12px; letter-spacing: .04em; }
 
   /* ---------- Intro + galeri ---------- */
@@ -126,10 +141,17 @@
     background: var(--cream); border: 2px solid var(--grey);
     box-shadow: -3px 1px 1px var(--shadow);
     font-size: 16px; letter-spacing: .1em; line-height: 1.2; text-align: center; color: var(--text);
-    transition: transform .12s, box-shadow .12s;
+    position: relative; isolation: isolate; overflow: hidden;
+    transition: color .35s cubic-bezier(.25,.46,.45,.94), border-color .35s cubic-bezier(.25,.46,.45,.94), transform .12s, box-shadow .12s;
   }
-  .btn:hover { transform: translate(1px, -2px); box-shadow: -4px 3px 2px var(--shadow); }
-  .btn:active { transform: translate(-2px, 1px); box-shadow: 0 0 0 var(--shadow); }
+  /* blok warna menyapu dari kanan ke kiri saat hover, ala Union */
+  .btn::before, .shop::before {
+    content: ""; position: absolute; inset: 0; z-index: -1; background: var(--brown);
+    transform: scaleX(0); transform-origin: 100% 50%; transition: transform .35s cubic-bezier(.25,.46,.45,.94);
+  }
+  .btn:hover::before, .btn:focus-visible::before, .shop:hover::before, .shop:focus-visible::before { transform: scaleX(1); transform-origin: 0 50%; }
+  .btn:hover, .btn:focus-visible, .shop:hover, .shop:focus-visible { color: var(--cream); border-color: var(--brown); }
+  .btn:active, .shop:active { transform: translate(-2px, 1px); box-shadow: 0 0 0 var(--shadow); }
 
   /* ---------- OutOfTex (OOT) ---------- */
   .oot { max-width: 1038px; margin: 0 auto; padding: 0 16px; }
@@ -150,10 +172,11 @@
     display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px;
     background: var(--cream); border: 2px solid var(--grey); box-shadow: -3px 1px 1px var(--shadow);
     font-size: 15px; letter-spacing: .08em; color: var(--text);
-    transition: transform .12s;
+    position: relative; isolation: isolate; overflow: hidden;
+    transition: color .35s cubic-bezier(.25,.46,.45,.94), border-color .35s cubic-bezier(.25,.46,.45,.94), transform .12s, box-shadow .12s;
   }
-  .shop img { width: 33px; height: 19px; }
-  .shop:hover { transform: translateY(-3px); }
+  .shop img { width: 33px; height: 19px; transition: filter .35s cubic-bezier(.25,.46,.45,.94); }
+  .shop:hover img, .shop:focus-visible img { filter: brightness(0) invert(96%) sepia(8%) saturate(400%) hue-rotate(330deg); }
 
   /* ---------- Footer ---------- */
   .foot { color: var(--brown); padding-top: 18px; }
@@ -185,6 +208,27 @@
   }
   .viewer-body img { width: 100%; height: auto; aspect-ratio: 1200 / 1698; background: #efe7da; }
 
+  /* ---------- Animasi ala Union: loader + muncul saat discroll ---------- */
+  .loader {
+    position: fixed; inset: 0; z-index: 100; background: var(--brown);
+    display: grid; place-items: center; transition: opacity .6s cubic-bezier(.25,.46,.45,.94), visibility .6s;
+    animation: loaderOut .6s 4s forwards; /* cadangan kalau JS gagal */
+  }
+  .loader img { width: 64px; height: auto; animation: logoLoading 2s infinite; }
+  .loader.done { opacity: 0; visibility: hidden; }
+  @keyframes logoLoading { 0% { opacity: 0; } 25%, 75% { opacity: 1; } 100% { opacity: 0; } }
+  @keyframes loaderOut { to { opacity: 0; visibility: hidden; } }
+  .anim .reveal { opacity: 0; transform: translateY(10px); transition: opacity .9s cubic-bezier(.25,.46,.45,.94) var(--d, 0s), transform .9s cubic-bezier(.25,.46,.45,.94) var(--d, 0s); }
+  .anim .reveal.in { opacity: 1; transform: none; }
+  .strip img { transition: filter .5s cubic-bezier(.25,.46,.45,.94); }
+  .strip img:hover { filter: brightness(1.08) contrast(1.04); }
+  @media (prefers-reduced-motion: reduce) {
+    .loader { display: none; }
+    .anim .hero-bg, .anim .hero .mouse, .anim .hero .logo, .anim .hero .tagline { animation: none; opacity: 1; }
+    .anim .reveal { opacity: 1; transform: none; transition: none; }
+    .strip { scroll-behavior: auto; }
+  }
+
   /* ---------- HP ---------- */
   @media (max-width: 899px) {
     :root { --head-h: 70px; }
@@ -192,9 +236,10 @@
     .head .brand br { display: inline; }
     .head .nav { display: none; }
     .head:not(.solid) .dash { opacity: 0; }
-    .hero { padding-bottom: 7vh; background-position: 58% center; }
+    .hero { padding-bottom: 7vh; }
+    .hero-bg { background-position: 58% center; }
     .mouse { margin-bottom: 36px; }
-    .hero .logo { width: 72px; margin-bottom: 18px; }
+    .hero .logo { width: 84px; margin-bottom: 14px; }
     .tagline { font-size: 10px; }
 
     .intro { padding: 72px 20px 40px; }
@@ -227,6 +272,8 @@
 </style>
 </head>
 <body>
+<script>document.documentElement.classList.add('anim');</script>
+<div class="loader" id="loader" aria-hidden="true"><img src="/assets/v2/logo-white.png" width="89" height="119" alt=""></div>
 
 <header class="head" id="head">
   <a class="brand" href="#top">TEXTURE<br> COFFEE</a>
@@ -240,8 +287,9 @@
 </header>
 
 <section class="hero" id="top">
+  <div class="hero-bg" aria-hidden="true"></div>
   <a class="mouse" href="#intro" aria-label="Scroll ke bawah"><span></span></a>
-  <img class="logo" src="/assets/v2/logo-white.png" width="89" height="119" alt="Logo texture">
+  <picture><source srcset="/assets/v2/logo-spin.webp" type="image/webp"><img class="logo" src="/assets/v2/logo-spin.gif" width="173" height="220" alt="Logo texture" fetchpriority="high"></picture>
   <p class="tagline">Feel the Pleasure in Every Texture</p>
 </section>
 
@@ -313,7 +361,7 @@
   <p class="tagline">Feel the Pleasure in Every Texture</p>
   <div class="dash"></div>
   <div class="row">
-    <a href="https://maps.app.goo.gl/4PXBMvExqJFBVyEt5" target="_blank" rel="noopener">01 Dr. Wahidim Street, Kediri</a>
+    <a href="https://maps.app.goo.gl/4PXBMvExqJFBVyEt5" target="_blank" rel="noopener">01 Dr. Wahidin Street, Kediri</a>
     <nav class="socials" aria-label="Media sosial">
       <a href="https://instagram.com/texturecoffee_" target="_blank" rel="noopener" aria-label="Instagram Texture Coffee">
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><rect x="2.5" y="2.5" width="19" height="19" rx="5.5"/><circle cx="12" cy="12" r="4.3"/><circle cx="17.6" cy="6.4" r="1.2" fill="currentColor" stroke="none"/></svg>
@@ -342,6 +390,27 @@
 </dialog>
 
 <script>
+  // Loader: logo berkedip di atas latar cokelat, hilang setelah halaman siap
+  const loader = document.getElementById('loader');
+  const hideLoader = () => loader.classList.add('done');
+  if (document.readyState === 'complete') setTimeout(hideLoader, 400);
+  else addEventListener('load', () => setTimeout(hideLoader, 400));
+  setTimeout(hideLoader, 3000);
+
+  // Muncul saat discroll: naik 10px sambil memudar, berurutan
+  const groupsReveal = [
+    ['.intro p', .15], ['.strip img', .08], ['.ctrl', 0], ['.group', .12],
+    ['.oot-photo', 0], ['.foot .tagline', 0], ['.foot .row', .1]
+  ];
+  const io = new IntersectionObserver(es => es.forEach(e => {
+    if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
+  }), { rootMargin: '0px 0px -8% 0px' });
+  groupsReveal.forEach(([sel, gap]) => document.querySelectorAll(sel).forEach((el, i) => {
+    el.classList.add('reveal');
+    el.style.setProperty('--d', (Math.min(i, 6) * gap).toFixed(2) + 's');
+    io.observe(el);
+  }));
+
   // Header: transparan di atas hero, jadi krem setelah lewat hero
   const head = document.getElementById('head');
   const hero = document.getElementById('top');

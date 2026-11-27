@@ -1,5 +1,25 @@
 # Changelog
 
+## [1.5.1] - 2026-11-27
+
+Developer: Achmad Yukrisna
+
+### Changed
+- Hero logo is now the spinning texture logo GIF (`assets/v2/logo-spin.webp`, with `.gif` fallback), cropped and shrunk from 9 MB to about 680 KB.
+- Animations in the style of uniongroupjakarta.com/brands/union:
+  - the hero photo zooms in from 1.2x to 1x;
+  - the logo, tagline and scroll mouse fade up;
+  - nav links get an underline that sweeps in;
+  - Selections/Reach/Features buttons and the Shopee/Tokopedia/Tiktokshop cards fill brown from the side on hover, and the text turns cream.
+
+### Added
+- Loading screen: brown background with a blinking texture logo. It fades out after the page loads.
+- Scroll reveal: the intro text, gallery photos, button groups, OOT banner and footer fade up 10px in sequence as they come into view.
+- Reduced-motion users get no loader and no animations.
+
+### Fixed
+- Footer address: "01 Dr. Wahidin Street, Kediri".
+
 ## [1.5.0] - 2026-11-27
 
 Developer: Achmad Yukrisna
