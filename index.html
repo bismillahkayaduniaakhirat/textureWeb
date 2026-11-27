@@ -3,208 +3,419 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>texture coffee</title>
-<meta name="description" content="Feel the Pleasure in every Texture — menu, reservasi, lokasi, dan toko texture coffee.">
-<meta name="theme-color" content="#c9c4b6">
-<link rel="icon" href="assets/logo.gif">
+<title>Texture Coffee</title>
+<meta name="description" content="Texture Coffee, Kediri — Feel the Pleasure in Every Texture. Menu, Frugal Treats, reservasi, lokasi, Grand Tex Avenue, Textunes, dan OutOfTex Store.">
+<meta name="theme-color" content="#fff9f1">
+<link rel="icon" href="/assets/logo.gif">
+<link rel="preload" as="image" href="/assets/v2/hero.webp" media="(min-width: 900px)">
+<link rel="preload" as="image" href="/assets/v2/hero-m.webp" media="(max-width: 899px)">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Courier+Prime:wght@400;700&family=Source+Sans+3:wght@400;600&display=swap" rel="stylesheet">
 <style>
   :root {
-    --page: #c9c4b6;        /* latar luar */
-    --card: #e5dfcf;        /* kartu & tombol */
-    --edge: #736e60;        /* border + bayangan tombol */
-    --maroon: #831813;      /* judul, bio, heading section, ikon */
-    --ink: #253242;         /* teks tombol */
-    --pill: #8c877a;        /* toggle Links/Shop */
+    --cream: #fff9f1;      /* latar */
+    --brown: #592622;      /* judul, garis putus-putus, ikon */
+    --grey: #8a8985;       /* border kotak & tombol */
+    --text: #535353;       /* teks tombol & paragraf */
+    --shadow: rgba(48, 48, 48, .9);
+    --sans: Aptos, "Myriad Pro", "Source Sans 3", "Segoe UI", sans-serif;
+    --mono: "Courier New", "Courier Prime", Courier, monospace;
+    --head-h: 72px;
   }
   * { box-sizing: border-box; margin: 0; padding: 0; }
-  html, body { background: var(--page); }
+  html { scroll-behavior: smooth; scroll-padding-top: calc(var(--head-h) + 16px); }
   body {
-    font-family: Barlow, sans-serif;
-    color: var(--ink);
-    min-height: 100vh;
-    display: flex;
-    justify-content: center;
+    background: var(--cream); color: var(--text);
+    font: 400 16px/1.6 var(--mono);
     -webkit-font-smoothing: antialiased;
   }
   a { color: inherit; text-decoration: none; }
+  img { display: block; max-width: 100%; }
+  body.locked { overflow: hidden; }
 
-  .card {
-    position: relative;
-    width: 100%;
-    max-width: 580px;
-    min-height: 100vh;
-    background: var(--card);
-    padding: 64px 16px 48px;
-  }
-  @media (min-width: 640px) {
-    body { padding: 24px 0; }
-    .card { min-height: auto; border-radius: 24px; padding: 64px 28px 48px; }
+  /* Garis putus-putus khas desain */
+  .dash {
+    height: 2px; width: 100%;
+    background: repeating-linear-gradient(90deg, currentColor 0 12px, transparent 12px 20px);
   }
 
-  .share {
-    position: absolute; top: 16px; right: 16px;
-    width: 40px; height: 40px; border-radius: 50%;
-    border: 0; background: #fff; color: #000; cursor: pointer;
-    display: grid; place-items: center;
-    transition: transform .15s;
+  /* ---------- Header (transparan di atas hero, krem setelah scroll) ---------- */
+  .head {
+    position: fixed; inset: 0 0 auto; z-index: 20;
+    color: #fff; text-align: center;
+    transition: background .3s, color .3s, box-shadow .3s;
   }
-  .share:hover { transform: scale(1.075); }
+  .head .brand {
+    display: block; padding: 28px 16px 23px; /* garis putus di y≈70, seperti DESKTOP 1 */
+    font: 400 16px/1.2 var(--sans); letter-spacing: .02em;
+  }
+  .head .brand br { display: none; }
+  .head .nav {
+    display: grid; grid-template-columns: repeat(4, 1fr);
+    max-width: 1300px; margin: 0 auto; padding: 18px 16px 0;
+    font-size: 16px; letter-spacing: .06em;
+    transition: opacity .25s;
+  }
+  .head .nav a { justify-self: center; padding: 4px 0; position: relative; }
+  /* Posisi menu persis DESKTOP 1 (tengah teks 222/534/887/1214 dari 1440), relatif ke tengah layar */
+  @media (min-width: 900px) {
+    .head .nav { display: block; position: relative; max-width: none; height: 45px; padding: 0; }
+    .head .nav a { position: absolute; top: 18px; left: calc(50% + var(--x) * min(50%, 720px)); transform: translateX(-50%); white-space: nowrap; }
+    .head .nav a:nth-child(1) { --x: -.6917; }
+    .head .nav a:nth-child(2) { --x: -.2583; }
+    .head .nav a:nth-child(3) { --x: .2319; }
+    .head .nav a:nth-child(4) { --x: .6861; }
+  }
+  .head .nav a::before { /* garis bawah menyapu, ala Union */
+    content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 1.5px; background: currentColor;
+    transform: scaleX(0); transform-origin: 100% 50%; transition: transform .35s cubic-bezier(.25,.46,.45,.94);
+  }
+  .head .nav a:hover::before, .head .nav a:focus-visible::before { transform: scaleX(1); transform-origin: 0 50%; }
+  .head.solid { background: var(--cream); color: var(--brown); box-shadow: 0 10px 18px -8px rgba(89, 38, 34, .18); }
+  .head.solid .nav { opacity: 0; height: 0; padding: 0; overflow: hidden; pointer-events: none; }
 
-  header { text-align: center; }
-  .avatar { width: 96px; height: 96px; border-radius: 50%; object-fit: cover; display: block; margin: 0 auto 16px; }
-  h1 { font-size: 24px; font-weight: 600; color: var(--maroon); line-height: 1.3; }
-  .bio { font-size: 16px; font-weight: 500; color: var(--maroon); margin-top: 4px; }
+  /* ---------- Hero ---------- */
+  .hero {
+    position: relative; height: 100vh; height: 100svh; min-height: 520px;
+    background: #111; overflow: hidden;
+    color: #fff; display: flex; flex-direction: column; align-items: center; justify-content: flex-end;
+    padding-bottom: 6vh; isolation: isolate;
+  }
+  .hero-bg {
+    position: absolute; inset: 0; z-index: -2;
+    background: url(/assets/v2/hero.webp) center 22% / cover no-repeat; /* fokus ke gelas: layar lebar memotong bawah, bukan atas */
+  }
+  /* Muncul pertama kali ala Union: foto memudar masuk dari latar krem setelah loader hilang */
+  .anim .hero { background: var(--cream); }
+  .anim .hero-bg, .anim .hero::before { opacity: 0; transition: opacity 1.8s ease-in-out; }
+  .anim .hero.ready .hero-bg, .anim .hero.ready::before { opacity: 1; }
+  .anim .hero.ready { background: #111; transition: background-color 1.8s ease-in-out; }
+  .hero-amb { display: none; }
+  /* Layar lebih lebar dari 16:10: foto utuh setinggi layar seperti DESKTOP 1,
+     sisi kiri-kanan diisi foto yang sama versi blur (ambient) supaya warnanya menyambung */
+  @media (min-width: 900px) and (min-aspect-ratio: 1601/1000) {
+    .hero-amb {
+      display: block; position: absolute; inset: -140px; z-index: -3;
+      background: url(/assets/v2/hero.webp) center / cover no-repeat;
+      filter: blur(36px) saturate(1.15) brightness(.72);
+    }
+    .anim .hero-amb { opacity: 0; transition: opacity 1.8s ease-in-out; }
+    .anim .hero.ready .hero-amb { opacity: 1; }
+    .hero-bg {
+      left: 50%; right: auto; width: 160vh; width: 160svh; transform: translateX(-50%);
+      background-size: 100% 100%; background-position: center;
+      -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 14%, #000 86%, transparent 100%);
+      mask-image: linear-gradient(90deg, transparent 0, #000 14%, #000 86%, transparent 100%);
+    }
+  }
+  .hero::before { /* vignette */
+    content: ""; position: absolute; inset: 0; z-index: -1;
+    background:
+      radial-gradient(ellipse at 50% 45%, rgba(0,0,0,0) 35%, rgba(0,0,0,.55) 100%),
+      linear-gradient(to bottom, rgba(0,0,0,.45) 0, rgba(0,0,0,0) 22%, rgba(0,0,0,0) 55%, rgba(0,0,0,.55) 100%);
+  }
+  .mouse {
+    width: 25px; height: 42px; border: 2px solid #fff; border-radius: 13px;
+    display: flex; justify-content: center; padding-top: 7px; margin-bottom: 44px;
+    animation: bob 1.8s ease-in-out infinite;
+  }
+  .mouse span { width: 10px; height: 6px; border-radius: 6px 6px 2px 2px; background: #fff; animation: wheel 1.8s ease-in-out infinite; }
+  @keyframes bob { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(8px); } }
+  @keyframes wheel { 0% { opacity: 1; transform: translateY(0); } 70% { opacity: 0; transform: translateY(12px); } 100% { opacity: 0; } }
+  .hero .logo { display: block; width: 104px; height: auto; margin-bottom: 20px; }
+  .anim .hero .mouse, .anim .hero .logo, .anim .hero .tagline { opacity: 0; animation: none; }
+  .anim .hero.ready .logo { animation: heroIn .9s cubic-bezier(.25,.46,.45,.94) .6s both; }
+  .anim .hero.ready .tagline { animation: heroIn .9s cubic-bezier(.25,.46,.45,.94) .75s both; }
+  .anim .hero.ready .mouse { animation: heroIn .9s cubic-bezier(.25,.46,.45,.94) .9s both, bob 1.8s ease-in-out 1.8s infinite; }
+  @keyframes heroIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+  .tagline { font-size: 12px; letter-spacing: .04em; }
 
-  .tabs {
-    display: inline-flex; margin: 20px auto 0; padding: 4px;
-    background: var(--pill); border-radius: 64px;
-  }
-  .tabs button {
-    font: 500 16px Barlow, sans-serif; color: #fff;
-    border: 0; background: transparent; cursor: pointer;
-    width: 88px; height: 40px; border-radius: 64px;
-    transition: background .2s, color .2s;
-  }
-  .tabs button[aria-selected="true"] { background: #fff; color: #000; }
+  /* ---------- Intro + galeri ---------- */
+  .intro { padding: 120px 16px 56px; text-align: center; }
+  .intro p { max-width: 980px; margin: 0 auto; font-size: clamp(14px, 1.45vw, 20px); line-height: 1.75; }
+  .intro p + p { margin-top: 1.6em; }
+  .intro b { color: #3a3a3a; }
 
-  .panel[hidden] { display: none; }
-  h2 {
-    font-size: 16px; font-weight: 700; color: var(--maroon);
-    text-align: center; margin: 32px 0 16px;
+  .gallery { position: relative; }
+  .strip {
+    display: flex; gap: 15px; overflow-x: auto; scroll-snap-type: x mandatory;
+    padding: 0 16px; scrollbar-width: none; -webkit-overflow-scrolling: touch;
   }
-  .links.shop { margin-top: 32px; }
-  .links { list-style: none; display: grid; gap: 16px; }
-  .link {
-    position: relative; display: flex; align-items: center; justify-content: center;
-    min-height: 68px; padding: 10px 56px;
-    background: var(--card);
-    border: 2px solid var(--edge);
-    border-radius: 16px;
-    box-shadow: 3px 4px 0 0 var(--edge);
-    font-size: 16px; text-align: center; line-height: 1.4;
-    transition: transform .12s, box-shadow .12s;
+  .strip::-webkit-scrollbar { display: none; }
+  .strip img {
+    flex: 0 0 auto; width: clamp(150px, 16.5vw, 260px); aspect-ratio: 237 / 356; height: auto;
+    object-fit: cover; scroll-snap-align: start; background: #e9e1d4;
   }
-  .link:hover { transform: translate(-1px, -1px); box-shadow: 4px 5px 0 0 var(--edge); }
-  .link:active { transform: translate(3px, 4px); box-shadow: 0 0 0 0 var(--edge); }
-  .link img {
-    position: absolute; left: 8px; top: 50%; transform: translateY(-50%);
-    width: 48px; height: 48px; border-radius: 10px; object-fit: cover;
+  .ctrl { display: flex; justify-content: center; align-items: center; gap: 30px; margin-top: 44px; }
+  .ctrl button {
+    width: 50px; height: 36px; border: 0; cursor: pointer;
+    background: url(/assets/v2/frame-l.png) center / contain no-repeat;
+    display: grid; place-items: center; transition: transform .15s;
   }
-  .link .dots {
-    position: absolute; right: 16px; top: 50%; transform: translateY(-50%);
-    color: var(--edge); opacity: .7;
-  }
+  .ctrl button.next { background-image: url(/assets/v2/frame-r.png); }
+  .ctrl button img { width: 21px; height: 14px; }
+  .ctrl button:hover { transform: translateY(-2px); }
+  .ctrl button:active { transform: translateY(1px); }
+  .ctrl .dot { width: 9px; height: 9px; border-radius: 50%; border: 1.5px solid var(--brown); background: var(--cream); }
 
-  .socials { display: flex; justify-content: center; gap: 8px; margin-top: 36px; }
-  .socials a { color: var(--maroon); padding: 8px; display: grid; transition: transform .15s; }
-  .socials a:hover { transform: scale(1.075); }
-
-  .toast {
-    position: fixed; left: 50%; bottom: 24px; transform: translateX(-50%);
-    background: var(--ink); color: #fff; padding: 10px 18px; border-radius: 999px;
-    font-size: 14px; opacity: 0; pointer-events: none; transition: opacity .2s;
+  /* ---------- Selections / Reach / Features ---------- */
+  .groups {
+    display: grid; grid-template-columns: repeat(3, 320px); gap: 23px;
+    justify-content: center; padding: 110px 16px 16px;
   }
-  .toast.show { opacity: 1; }
+  .group { border: 1px solid var(--grey); padding: 10px 32px 24px; text-align: center; }
+  .group h2 { font: 400 24px/1.6 var(--sans); color: var(--brown); letter-spacing: .02em; margin-bottom: 18px; }
+  .btns { display: grid; gap: 24px; }
+  .btn {
+    display: grid; place-items: center; min-height: 75px; padding: 8px 12px;
+    background: var(--cream); border: 2px solid var(--grey);
+    box-shadow: -3px 1px 1px var(--shadow);
+    font-size: 16px; letter-spacing: .1em; line-height: 1.2; text-align: center; color: var(--text);
+    position: relative; isolation: isolate; overflow: hidden;
+    transition: color .35s cubic-bezier(.25,.46,.45,.94), border-color .35s cubic-bezier(.25,.46,.45,.94), transform .12s, box-shadow .12s;
+  }
+  /* blok warna menyapu dari kanan ke kiri saat hover, ala Union */
+  .btn::before, .shop::before {
+    content: ""; position: absolute; inset: 0; z-index: -1; background: var(--brown);
+    transform: scaleX(0); transform-origin: 100% 50%; transition: transform .35s cubic-bezier(.25,.46,.45,.94);
+  }
+  .btn:hover::before, .btn:focus-visible::before, .shop:hover::before, .shop:focus-visible::before { transform: scaleX(1); transform-origin: 0 50%; }
+  .btn:hover, .btn:focus-visible, .shop:hover, .shop:focus-visible { color: var(--cream); border-color: var(--brown); }
+  .btn:active, .shop:active { transform: translate(-2px, 1px); box-shadow: 0 0 0 var(--shadow); }
 
-  /* Viewer Menu / Frugal Treats (tanpa pindah halaman) */
+  /* ---------- OutOfTex (OOT) ---------- */
+  .oot { max-width: 1038px; margin: 0 auto; padding: 0 16px; }
+  .oot-photo {
+    position: relative; aspect-ratio: 1006 / 421; overflow: hidden;
+    background: #333 url(/assets/v2/oot.webp) center / cover no-repeat;
+  }
+  .oot-photo::before { content: ""; position: absolute; inset: 0; background: radial-gradient(ellipse at center, rgba(0,0,0,0) 45%, rgba(0,0,0,.45) 100%); }
+  .oot-logo { position: absolute; left: 66.5%; top: 12%; width: 11.1%; height: auto; }
+  .oot-note {
+    position: absolute; left: 51.3%; bottom: 4%; transform: translateX(-50%); width: 80%;
+    color: #fff; text-align: center; font: 400 11px/1.3 var(--sans); text-shadow: 0 1px 3px rgba(0,0,0,.5);
+  }
+  .oot-note b { font-weight: 800; }
+  .shops { position: absolute; left: 53%; top: 36%; display: flex; gap: 2.2%; width: 40%; }
+  .shop {
+    flex: 1; aspect-ratio: 120 / 170;
+    display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px;
+    background: var(--cream); border: 2px solid var(--grey); box-shadow: -3px 1px 1px var(--shadow);
+    font-size: 15px; letter-spacing: .08em; color: var(--text);
+    position: relative; isolation: isolate; overflow: hidden;
+    transition: color .35s cubic-bezier(.25,.46,.45,.94), border-color .35s cubic-bezier(.25,.46,.45,.94), transform .12s, box-shadow .12s;
+  }
+  .shop img { width: 33px; height: 19px; transition: filter .35s cubic-bezier(.25,.46,.45,.94); }
+  .shop:hover img, .shop:focus-visible img { filter: brightness(0) invert(96%) sepia(8%) saturate(400%) hue-rotate(330deg); }
+
+  /* ---------- Footer ---------- */
+  .foot { color: var(--brown); padding-top: 18px; }
+  .foot .tagline { text-align: center; margin-bottom: 14px; }
+  .foot .row { display: flex; justify-content: space-between; align-items: center; gap: 16px; padding: 14px 36px 18px; font-size: 12px; }
+  .foot .socials { display: flex; gap: 12px; }
+  .foot .socials a { display: grid; padding: 2px; transition: transform .15s; }
+  .foot .socials a:hover { transform: scale(1.1); }
+
+  /* ---------- Viewer Menu / Frugal Treats ---------- */
   .viewer {
-    border: 0; padding: 0; margin: auto;
-    width: min(580px, 100vw); height: min(100dvh, 900px); max-width: 100vw; max-height: 100dvh;
-    background: var(--card); color: var(--ink);
-    display: flex; flex-direction: column;
+    border: 2px solid var(--grey); padding: 0; margin: auto;
+    width: min(620px, 100vw); height: min(100dvh, 920px); max-width: 100vw; max-height: 100dvh;
+    background: var(--cream); color: var(--text); display: flex; flex-direction: column;
   }
   .viewer:not([open]) { display: none; }
-  @media (min-width: 640px) { .viewer { height: calc(100dvh - 48px); border-radius: 24px; overflow: hidden; } }
-  .viewer::backdrop { background: rgba(40, 36, 28, .55); }
-  .viewer-bar {
-    display: flex; align-items: center; gap: 12px;
-    padding: 12px 12px 12px 20px; border-bottom: 2px solid var(--edge);
-  }
-  .viewer-bar h3 { flex: 1; font-size: 18px; font-weight: 700; color: var(--maroon); }
-  .viewer-bar a { font-size: 14px; font-weight: 500; color: var(--ink); text-decoration: underline; }
+  .viewer::backdrop { background: rgba(40, 24, 20, .6); }
+  .viewer-bar { display: flex; align-items: center; gap: 12px; padding: 12px 12px 12px 20px; color: var(--brown); }
+  .viewer-bar h3 { flex: 1; font: 400 20px var(--sans); letter-spacing: .04em; text-transform: uppercase; }
+  .viewer-bar a { font-size: 13px; text-decoration: underline; color: var(--text); }
   .viewer-close {
-    width: 40px; height: 40px; border-radius: 50%; border: 2px solid var(--edge);
-    background: var(--card); color: var(--ink); cursor: pointer; font-size: 20px; line-height: 1;
-    box-shadow: 2px 2px 0 0 var(--edge);
+    width: 40px; height: 40px; border: 2px solid var(--grey); background: var(--cream); color: var(--text);
+    cursor: pointer; font-size: 20px; line-height: 1; box-shadow: -2px 1px 1px var(--shadow);
   }
+  .viewer .dash { color: var(--brown); }
   .viewer-body {
     flex: 1; overflow-y: auto; -webkit-overflow-scrolling: touch; overscroll-behavior: contain;
-    background: #d8d5c6; display: flex; flex-direction: column; gap: 6px;
+    background: #efe7da; display: flex; flex-direction: column; gap: 6px;
   }
-  .viewer-body img {
-    display: block; width: 100%; height: auto; aspect-ratio: 1200 / 1698;
-    background: #d8d5c6;
+  .viewer-body img { width: 100%; height: auto; aspect-ratio: 1200 / 1698; background: #efe7da; }
+
+  /* ---------- Animasi ala Union: loader + muncul saat discroll ---------- */
+  .loader {
+    position: fixed; inset: 0; z-index: 100; background: var(--brown);
+    display: grid; place-items: center; transition: opacity .6s cubic-bezier(.25,.46,.45,.94), visibility .6s;
+    animation: loaderOut .6s 4s forwards; /* cadangan kalau JS gagal */
   }
-  body.locked { overflow: hidden; }
+  .loader img { width: 64px; height: auto; animation: logoLoading 2s infinite; }
+  .loader.done { opacity: 0; visibility: hidden; }
+  @keyframes logoLoading { 0% { opacity: 0; } 25%, 75% { opacity: 1; } 100% { opacity: 0; } }
+  @keyframes loaderOut { to { opacity: 0; visibility: hidden; } }
+  .anim .reveal { opacity: 0; transform: translateY(10px); transition: opacity .9s cubic-bezier(.25,.46,.45,.94) var(--d, 0s), transform .9s cubic-bezier(.25,.46,.45,.94) var(--d, 0s); }
+  .anim .reveal.in { opacity: 1; transform: none; }
+  .strip img { transition: filter .5s cubic-bezier(.25,.46,.45,.94); }
+  .strip img:hover { filter: brightness(1.08) contrast(1.04); }
+  @media (prefers-reduced-motion: reduce) {
+    .loader { display: none; }
+    .anim .hero-bg, .anim .hero-amb, .anim .hero::before, .anim .hero .mouse, .anim .hero .logo, .anim .hero .tagline { animation: none; opacity: 1; transition: none; }
+    .anim .reveal { opacity: 1; transform: none; transition: none; }
+    .strip { scroll-behavior: auto; }
+  }
+
+  /* ---------- HP ---------- */
+  @media (max-width: 899px) {
+    :root { --head-h: 70px; }
+    /* Ukuran HP mengikuti MOBILE 1: artboard 589x1280 = satu layar, 1px desain = 100vw/589 */
+    .head .brand { padding: 6.9vw 16px 3vw; font-size: max(10px, 2.72vw); line-height: 1.25; }
+    .head .brand br { display: inline; }
+    .head .nav { display: none; }
+    .head:not(.solid) .dash { opacity: 0; }
+    .hero { height: 88.75vh; height: 88.75svh; min-height: 0; padding-bottom: 10.6vw; } /* teks intro mengintip di bawah, seperti desain */
+    .hero-bg { background-image: url(/assets/v2/hero-m.webp); background-position: center; }
+    .hero::after { /* garis putus-putus di batas hero dan krem, seperti MOBILE 1 */
+      content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 2px;
+      background: repeating-linear-gradient(90deg, var(--brown) 0 12px, transparent 12px 20px);
+    }
+    .mouse { width: 4.24vw; height: 7.13vw; min-width: 16px; min-height: 27px; border-width: 1.5px; padding-top: 1.36vw; margin-bottom: 7.5vw; }
+    .mouse span { width: 2.04vw; height: 1.36vw; min-width: 7px; min-height: 5px; }
+    .hero .logo { width: 15.1vw; margin-bottom: 1.8vw; }
+    .hero .tagline { font-size: max(8px, 1.53vw); }
+
+    .intro { padding: 5.3vw 20px 40px; }
+    .intro p { font-size: max(12px, 3.06vw); }
+    .strip { gap: 10px; }
+    .strip img { width: 40vw; }
+    .ctrl { margin-top: 24px; gap: 24px; }
+    .ctrl button { width: 42px; height: 30px; }
+    .ctrl button img { width: 17px; height: 12px; }
+
+    .groups { grid-template-columns: 1fr; gap: 26px; padding: 44px 20px 8px; }
+    .group { border: 0; padding: 0; }
+    .group h2 { font-size: 21px; margin-bottom: 12px; }
+    .btns { grid-template-columns: 1fr 1fr; gap: 16px; }
+    .btn { min-height: 56px; font-size: 13px; letter-spacing: .08em; }
+
+    .oot { padding: 56px 0 0; }
+    .oot-photo { aspect-ratio: 590 / 247; }
+    .oot-logo { left: 66.8%; top: 30%; width: 19%; }
+    .oot-note { display: none; }
+    .shops { position: static; width: auto; padding: 32px 24px 0; gap: 16px; }
+    .shop { aspect-ratio: 1; font-size: 13px; letter-spacing: .06em; }
+    .shop img { width: 30px; height: 17px; }
+
+    .foot { padding-top: 56px; }
+    .foot .tagline { font-size: 10px; }
+    .foot .row { padding: 12px 24px 18px; font-size: 10px; }
+  }
+  @media (max-width: 360px) { .shop { font-size: 11px; letter-spacing: .02em; } }
 </style>
-<script>
-  // Linktree hanya untuk HP. Layar lebar (desktop/tablet landscape) langsung ke halaman menu.
-  // Tambah ?links di URL untuk tetap membuka linktree di desktop.
-  if (matchMedia('(min-width: 900px)').matches && !/[?&]links/.test(location.search)) location.replace('/menu/' + location.hash);
-</script>
 </head>
 <body>
-<main class="card">
-  <button class="share" id="share" aria-label="Bagikan halaman">
-    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12v7a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-7"/><path d="M16 6l-4-4-4 4"/><path d="M12 2v13"/></svg>
-  </button>
+<script>document.documentElement.classList.add('anim');</script>
+<div class="loader" id="loader" aria-hidden="true"><img src="/assets/v2/logo-white.png" width="89" height="119" alt=""></div>
 
-  <header>
-    <img class="avatar" src="assets/logo.gif" alt="Logo texture coffee">
-    <h1>texture coffee</h1>
-    <p class="bio">Feel the Pleasure in every Texture</p>
-    <div class="tabs" role="tablist">
-      <button role="tab" aria-selected="true" aria-controls="p-links" id="t-links">Home</button>
-      <button role="tab" aria-selected="false" aria-controls="p-shop" id="t-shop">Shop</button>
+<header class="head" id="head">
+  <a class="brand" href="#top">TEXTURE<br> COFFEE</a>
+  <div class="dash"></div>
+  <nav class="nav" aria-label="Navigasi">
+    <a href="#selections">Selection</a>
+    <a href="#reach">Reach</a>
+    <a href="#features">Features</a>
+    <a href="#oot">OOT Store</a>
+  </nav>
+</header>
+
+<section class="hero" id="top">
+  <div class="hero-amb" aria-hidden="true"></div>
+  <div class="hero-bg" aria-hidden="true"></div>
+  <a class="mouse" href="#intro" aria-label="Scroll ke bawah"><span></span></a>
+  <picture><source srcset="/assets/v2/logo-spin.webp" type="image/webp"><img class="logo" src="/assets/v2/logo-spin.gif" width="173" height="220" alt="Logo texture" fetchpriority="high"></picture>
+  <p class="tagline">Feel the Pleasure in Every Texture</p>
+</section>
+
+<main>
+  <section class="intro" id="intro">
+    <p>Located in the heart of historic Kediri, <b>Texture Coffee</b> brings together heritage and modern coffee culture in a warm, inviting space.</p>
+    <p>Rooted in local craftsmanship, we offer thoughtfully crafted homemade dishes and coffee, inspired by the richness of Indonesian culinary heritage and brought to life through a contemporary approach.</p>
+  </section>
+
+  <section class="gallery" aria-label="Galeri Texture Coffee">
+    <div class="strip" id="strip">
+      <img src="/assets/v2/g1.webp" width="237" height="356" alt="Cermin dan sudut ruang Texture Coffee">
+      <img src="/assets/v2/g2.webp" width="237" height="356" alt="Kursi putih di lantai teraso">
+      <img src="/assets/v2/g3.webp" width="237" height="356" alt="Rak botol di dinding terakota">
+      <img src="/assets/v2/g4.webp" width="237" height="356" alt="Barista menyiapkan espresso">
+      <img src="/assets/v2/g5.webp" width="237" height="356" alt="Cangkir oranye di atas mesin espresso">
+      <img src="/assets/v2/g6.webp" width="237" height="356" alt="Barista menuang latte art">
+      <img src="/assets/v2/g7.webp" width="237" height="356" alt="Area bar Texture Coffee" loading="lazy">
+      <img src="/assets/v2/g8.webp" width="237" height="356" alt="Jersey dan disco ball di dinding" loading="lazy">
+      <img src="/assets/v2/g9.webp" width="237" height="356" alt="Pantulan ruang di cermin cembung" loading="lazy">
+      <img src="/assets/v2/g10.webp" width="237" height="356" alt="Burger dan kentang goreng" loading="lazy">
+      <img src="/assets/v2/g11.webp" width="237" height="356" alt="Ayam goreng dan potato wedges" loading="lazy">
+      <img src="/assets/v2/g12.webp" width="237" height="356" alt="Chicken katsu dengan mac and cheese" loading="lazy">
+      <img src="/assets/v2/g13.webp" width="237" height="356" alt="Es kopi susu Texture" loading="lazy">
+      <img src="/assets/v2/g14.webp" width="237" height="356" alt="Minuman soda stroberi" loading="lazy">
+      <img src="/assets/v2/g15.webp" width="237" height="356" alt="Es kopi krim di meja" loading="lazy">
     </div>
-  </header>
+    <div class="ctrl">
+      <button class="prev" id="prev" aria-label="Foto sebelumnya"><img src="/assets/v2/arrow-l.png" alt=""></button>
+      <span class="dot" aria-hidden="true"></span>
+      <button class="next" id="next" aria-label="Foto berikutnya"><img src="/assets/v2/arrow-r.png" alt=""></button>
+    </div>
+  </section>
 
-  <section class="panel" id="p-links" role="tabpanel" aria-labelledby="t-links">
-    <h2>Selections</h2>
-    <ul class="links">
-      <li><a class="link" href="https://drive.google.com/file/d/1sEipgV9thM8fFejZK60uVRUVrgVLJTvY/view?usp=sharing" target="_blank" rel="noopener" data-pages="menu" data-count="13">Menu<span class="dots">⋮</span></a></li>
-      <li><a class="link" href="https://drive.google.com/file/d/10nZ4mXNoNHIncA9vWqNdGDAVyyY6gwCb/view?usp=sharing" target="_blank" rel="noopener" data-pages="frugal" data-count="4">Frugal Treats<span class="dots">⋮</span></a></li>
-    </ul>
+  <div class="groups">
+    <section class="group" id="selections">
+      <h2>SELECTIONS</h2>
+      <div class="btns">
+        <a class="btn" href="https://drive.google.com/file/d/1sEipgV9thM8fFejZK60uVRUVrgVLJTvY/view?usp=sharing" target="_blank" rel="noopener" data-pages="menu" data-count="13" data-title="Menu">Menu</a>
+        <a class="btn" href="https://drive.google.com/file/d/10nZ4mXNoNHIncA9vWqNdGDAVyyY6gwCb/view?usp=sharing" target="_blank" rel="noopener" data-pages="frugal" data-count="4" data-title="Frugal Treats">Frugal<br>Treats</a>
+      </div>
+    </section>
+    <section class="group" id="reach">
+      <h2>REACH</h2>
+      <div class="btns">
+        <a class="btn" href="https://wa.me/6282144380001" target="_blank" rel="noopener">Reservations</a>
+        <a class="btn" href="https://maps.app.goo.gl/4PXBMvExqJFBVyEt5" target="_blank" rel="noopener">Location</a>
+      </div>
+    </section>
+    <section class="group" id="features">
+      <h2>FEATURES</h2>
+      <div class="btns">
+        <a class="btn" href="/grandtexavenue/">Grand Tex Avenue</a>
+        <a class="btn" href="https://open.spotify.com/user/31hdk2fr2zlb3qqzt5osuafjgpli" target="_blank" rel="noopener">Textunes</a>
+      </div>
+    </section>
+  </div>
 
-    <h2>Reach</h2>
-    <ul class="links">
-      <li><a class="link" href="https://wa.me/6282144380001" target="_blank" rel="noopener">Reservations<span class="dots">⋮</span></a></li>
-      <li><a class="link" href="https://maps.app.goo.gl/4PXBMvExqJFBVyEt5" target="_blank" rel="noopener">Location<span class="dots">⋮</span></a></li>
-    </ul>
+  <section class="oot" id="oot" aria-label="OutOfTex Store">
+    <div class="oot-photo">
+      <picture><source srcset="/assets/v2/oot-spin.webp" type="image/webp"><img class="oot-logo" src="/assets/v2/oot-spin.gif" width="220" height="159" alt="OutOfTex" loading="lazy"></picture>
+      <p class="oot-note"><b>OutOfTex</b> a creative extension of Texture Coffee.<br>Curated objects and limited essentials with a distinct point of view. Made with love from tex.</p>
+      <div class="shops shops-desk"></div>
+    </div>
+  </section>
+</main>
 
-    <h2>Features</h2>
-    <ul class="links">
-      <li><a class="link" href="https://open.spotify.com/user/31hdk2fr2zlb3qqzt5osuafjgpli" target="_blank" rel="noopener">Textunes<span class="dots">⋮</span></a></li>
-    </ul>
-
-    <h2>Venue</h2>
-    <ul class="links">
-      <li><a class="link" href="/grandtexavenue/">Grand Tex Avenue<span class="dots">⋮</span></a></li>
-    </ul>
-
+<footer class="foot">
+  <p class="tagline">Feel the Pleasure in Every Texture</p>
+  <div class="dash"></div>
+  <div class="row">
+    <a href="https://maps.app.goo.gl/4PXBMvExqJFBVyEt5" target="_blank" rel="noopener">01 Dr. Wahidin Street, Kediri</a>
     <nav class="socials" aria-label="Media sosial">
-      <a href="https://instagram.com/texturecoffee_" target="_blank" rel="noopener" aria-label="texture coffee Instagram">
-        <svg width="32" height="32" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.2c3.2 0 3.6 0 4.8.1 3.3.1 4.8 1.7 4.9 4.9.1 1.3.1 1.6.1 4.8s0 3.6-.1 4.8c-.1 3.2-1.7 4.8-4.9 4.9-1.3.1-1.6.1-4.8.1s-3.6 0-4.8-.1c-3.3-.1-4.8-1.7-4.9-4.9C2.2 15.6 2.2 15.2 2.2 12s0-3.6.1-4.8C2.4 3.9 3.9 2.4 7.2 2.3 8.4 2.2 8.8 2.2 12 2.2zM12 0C8.7 0 8.3 0 7.1.1 2.7.3.3 2.7.1 7.1 0 8.3 0 8.7 0 12s0 3.7.1 4.9c.2 4.4 2.6 6.8 7 7 1.2.1 1.6.1 4.9.1s3.7 0 4.9-.1c4.4-.2 6.8-2.6 7-7 .1-1.2.1-1.6.1-4.9s0-3.7-.1-4.9c-.2-4.4-2.6-6.8-7-7C15.7 0 15.3 0 12 0zm0 5.8a6.2 6.2 0 1 0 0 12.4 6.2 6.2 0 0 0 0-12.4zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.4-11.8a1.4 1.4 0 1 0 0 2.9 1.4 1.4 0 0 0 0-2.9z"/></svg>
+      <a href="https://instagram.com/texturecoffee_" target="_blank" rel="noopener" aria-label="Instagram Texture Coffee">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><rect x="2.5" y="2.5" width="19" height="19" rx="5.5"/><circle cx="12" cy="12" r="4.3"/><circle cx="17.6" cy="6.4" r="1.2" fill="currentColor" stroke="none"/></svg>
       </a>
-      <a href="https://tiktok.com/@texturecoffee_" target="_blank" rel="noopener" aria-label="texture coffee TikTok">
-        <svg width="32" height="32" viewBox="0 0 24 24" fill="currentColor"><path d="M19.6 6.7a4.8 4.8 0 0 1-3.8-4.2V2h-3.4v13.7a2.9 2.9 0 0 1-5.2 1.7 2.9 2.9 0 0 1 3.2-4.5V9.4a6.3 6.3 0 0 0-5.4 10.7 6.3 6.3 0 0 0 10.8-4.4V8.7a8.2 8.2 0 0 0 4.8 1.5V6.8c-.3 0-.7 0-1-.1z"/></svg>
+      <a href="https://tiktok.com/@texturecoffee_" target="_blank" rel="noopener" aria-label="TikTok Texture Coffee">
+        <svg width="18" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M19.6 6.7a4.8 4.8 0 0 1-3.8-4.2V2h-3.4v13.7a2.9 2.9 0 0 1-5.2 1.7 2.9 2.9 0 0 1 3.2-4.5V9.4a6.3 6.3 0 0 0-5.4 10.7 6.3 6.3 0 0 0 10.8-4.4V8.7a8.2 8.2 0 0 0 4.8 1.5V6.8c-.3 0-.7 0-1-.1z"/></svg>
       </a>
     </nav>
-  </section>
+  </div>
+</footer>
 
-  <section class="panel" id="p-shop" role="tabpanel" aria-labelledby="t-shop" hidden>
-    <ul class="links shop">
-      <li><a class="link" href="https://shopee.co.id/texturecoffee" target="_blank" rel="noopener"><img src="assets/shopee.gif" alt="">Shopee OutOfTex Store<span class="dots">⋮</span></a></li>
-      <li><a class="link" href="https://tk.tokopedia.com/ZSQBFTdjK" target="_blank" rel="noopener"><img src="assets/tokopedia.gif" alt="">Tokopedia OutOfTex Store<span class="dots">⋮</span></a></li>
-      <li><a class="link" href="https://vt.tiktok.com/ZSQBYGbRV" target="_blank" rel="noopener"><img src="assets/tiktokshop.gif" alt="">Tiktokshop OutOfTex Store<span class="dots">⋮</span></a></li>
-    </ul>
-  </section>
-
-</main>
-<div class="toast" id="toast">Link disalin</div>
+<template id="shop-cards">
+  <a class="shop" href="https://shopee.co.id/texturecoffee" target="_blank" rel="noopener">Shopee<img src="/assets/v2/oot-brown.png" alt=""></a>
+  <a class="shop" href="https://tk.tokopedia.com/ZSQBFTdjK" target="_blank" rel="noopener">Tokopedia<img src="/assets/v2/oot-brown.png" alt=""></a>
+  <a class="shop" href="https://vt.tiktok.com/ZSQBYGbRV" target="_blank" rel="noopener">Tiktokshop<img src="/assets/v2/oot-brown.png" alt=""></a>
+</template>
 
 <dialog class="viewer" id="viewer" aria-labelledby="viewer-title">
   <div class="viewer-bar">
@@ -212,34 +423,83 @@
     <a id="viewer-ext" href="#" target="_blank" rel="noopener">Buka di Drive</a>
     <button class="viewer-close" id="viewer-close" aria-label="Tutup">×</button>
   </div>
-  <div class="viewer-body" id="viewer-body">
-  </div>
+  <div class="dash"></div>
+  <div class="viewer-body" id="viewer-body"></div>
 </dialog>
 
 <script>
-  // Tab Links / Shop
-  const tabs = document.querySelectorAll('[role=tab]');
-  tabs.forEach(t => t.addEventListener('click', () => {
-    tabs.forEach(x => {
-      const on = x === t;
-      x.setAttribute('aria-selected', on);
-      document.getElementById(x.getAttribute('aria-controls')).hidden = !on;
-    });
+  // Loader: logo berkedip di atas latar cokelat, hilang setelah halaman siap
+  const loader = document.getElementById('loader');
+  const heroEl = document.getElementById('top');
+  let shown = false;
+  const hideLoader = () => {
+    if (shown) return; shown = true;
+    loader.classList.add('done');
+    setTimeout(() => heroEl.classList.add('ready'), 250); /* foto mulai memudar setelah loader hilang, supaya fade-nya terlihat */
+  };
+  if (document.readyState === 'complete') setTimeout(hideLoader, 400);
+  else addEventListener('load', () => setTimeout(hideLoader, 400));
+  setTimeout(hideLoader, 3000);
+
+  // Muncul saat discroll: naik 10px sambil memudar, berurutan
+  const groupsReveal = [
+    ['.intro p', .15], ['.strip img', .08], ['.ctrl', 0], ['.group', .12],
+    ['.oot-photo', 0], ['.foot .tagline', 0], ['.foot .row', .1]
+  ];
+  const io = new IntersectionObserver(es => es.forEach(e => {
+    if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
+  }), { rootMargin: '0px 0px -8% 0px' });
+  groupsReveal.forEach(([sel, gap]) => document.querySelectorAll(sel).forEach((el, i) => {
+    el.classList.add('reveal');
+    el.style.setProperty('--d', (Math.min(i, 6) * gap).toFixed(2) + 's');
+    io.observe(el);
   }));
 
-  // Menu & Frugal Treats: halaman PDF (gambar di assets/<nama>/<n>.webp) tampil di dalam halaman
+  // Header: transparan di atas hero, jadi krem setelah lewat hero
+  const head = document.getElementById('head');
+  const hero = document.getElementById('top');
+  new IntersectionObserver(([e]) => head.classList.toggle('solid', !e.isIntersecting),
+    { rootMargin: '-80px 0px 0px 0px' }).observe(hero);
+
+  // Kartu toko OOT: di desktop menumpang di atas foto, di HP di bawah foto
+  const wide = matchMedia('(min-width: 900px)');
+  const tpl = document.getElementById('shop-cards');
+  const shops = document.createElement('div');
+  shops.className = 'shops';
+  shops.append(tpl.content.cloneNode(true));
+  const placeShops = () => {
+    const photo = document.querySelector('.oot-photo');
+    (wide.matches ? photo : photo.parentNode).appendChild(shops);
+  };
+  document.querySelector('.shops-desk').remove();
+  placeShops();
+  wide.addEventListener('change', placeShops);
+
+  // Galeri: panah geser satu foto, di ujung kembali ke awal/akhir
+  const strip = document.getElementById('strip');
+  const step = () => strip.querySelector('img').getBoundingClientRect().width + parseFloat(getComputedStyle(strip).columnGap || 15);
+  const slide = dir => {
+    const max = strip.scrollWidth - strip.clientWidth - 2;
+    if (dir > 0 && strip.scrollLeft >= max) strip.scrollTo({ left: 0, behavior: 'smooth' });
+    else if (dir < 0 && strip.scrollLeft <= 2) strip.scrollTo({ left: strip.scrollWidth, behavior: 'smooth' });
+    else strip.scrollBy({ left: dir * step(), behavior: 'smooth' });
+  };
+  document.getElementById('prev').addEventListener('click', () => slide(-1));
+  document.getElementById('next').addEventListener('click', () => slide(1));
+
+  // Menu & Frugal Treats: halaman PDF (assets/<nama>/<n>.webp) tampil di dalam halaman
   const viewer = document.getElementById('viewer');
   const body = document.getElementById('viewer-body');
   document.querySelectorAll('[data-pages]').forEach(a => a.addEventListener('click', e => {
-    if (!viewer.showModal) return; // browser lama: biarkan buka Drive
+    if (!viewer.showModal) return; // browser lama: buka Drive
     e.preventDefault();
-    const title = a.firstChild.textContent.trim();
+    const title = a.dataset.title;
     document.getElementById('viewer-title').textContent = title;
     document.getElementById('viewer-ext').href = a.href;
     body.innerHTML = '';
     for (let i = 1; i <= +a.dataset.count; i++) {
       const img = new Image();
-      img.src = `assets/${a.dataset.pages}/${i}.webp`;
+      img.src = `/assets/${a.dataset.pages}/${i}.webp`;
       img.alt = `${title} halaman ${i}`;
       img.loading = i <= 2 ? 'eager' : 'lazy';
       img.decoding = 'async';
@@ -249,22 +509,9 @@
     viewer.showModal();
     document.body.classList.add('locked');
   }));
-  const closeViewer = () => viewer.close();
-  document.getElementById('viewer-close').addEventListener('click', closeViewer);
-  viewer.addEventListener('click', e => { if (e.target === viewer) closeViewer(); });
+  document.getElementById('viewer-close').addEventListener('click', () => viewer.close());
+  viewer.addEventListener('click', e => { if (e.target === viewer) viewer.close(); });
   viewer.addEventListener('close', () => document.body.classList.remove('locked'));
-
-  // Tombol share: native share di HP, salin link di desktop
-  const toast = document.getElementById('toast');
-  document.getElementById('share').addEventListener('click', async () => {
-    const data = { title: 'texture coffee', text: 'Feel the Pleasure in every Texture', url: location.href };
-    try {
-      if (navigator.share) { await navigator.share(data); return; }
-      await navigator.clipboard.writeText(location.href);
-      toast.classList.add('show');
-      setTimeout(() => toast.classList.remove('show'), 1800);
-    } catch (e) { /* dibatalkan user */ }
-  });
 </script>
 </body>
 </html>

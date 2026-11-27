@@ -1,5 +1,129 @@
 # Changelog
 
+## [1.5.9] - 2026-11-27
+
+Developer: Achmad Yukrisna
+
+### Changed
+- Release to production (main): the new design and every change from 1.5.0 to 1.5.8 go live on texturecoffee.id.
+- Checked before release: the Grand Tex Avenue button points to https://texturecoffee.id/grandtexavenue/ (live returns 200 through the Netlify rewrite in `_redirects`).
+
+## [1.5.8] - 2026-11-27
+
+Developer: Achmad Yukrisna
+
+### Fixed
+- Desktop header matches DESKTOP 1. The dashed line moved down from y≈57 to y≈70, and the menu moved down about 20px.
+- Menu items (Selection, Reach, Features, OOT Store) sit at the same horizontal positions as in DESKTOP 1 (222 / 534 / 887 / 1214 of 1440). They scale relative to the screen centre on other widths.
+
+## [1.5.7] - 2026-11-27
+
+Developer: Achmad Yukrisna
+
+### Fixed
+- Hero fade-in was invisible in 1.5.6 because it faded from a dark base into a dark photo. It fades from the cream base again, like Union.
+- The hero starts fading in 250ms after the loader begins to disappear, so the loader no longer hides the fade.
+
+## [1.5.6] - 2026-11-27
+
+Developer: Achmad Yukrisna
+
+### Changed
+- On screens wider than 16:10, the areas left and right of the hero photo are now filled with the same photo, blurred and dimmed (ambient), instead of plain black. The edge fade is widened to 14%.
+- The hero fade-in is longer (1.8s) so it reads more clearly, like Union.
+
+### Fixed
+- Cream/white bands on the left and right during the fade-in after a refresh. The hero base is now dark from the start, and the blur layer is larger so its soft edge stays off screen.
+
+## [1.5.5] - 2026-11-27
+
+Developer: Achmad Yukrisna
+
+### Changed
+- Hero no longer looks over-zoomed on very wide screens (for example 2000x742). On screens wider than 16:10, the photo shows whole at screen height, framed like DESKTOP 1. The left and right edges fade into dark.
+
+### Removed
+- Hero zoom animation (1.2x to 1x). The first load is now only the Union-style fade-in, as on uniongroupjakarta.com.
+
+## [1.5.4] - 2026-11-27
+
+Developer: Achmad Yukrisna
+
+### Changed
+- First-load hero effect now follows uniongroupjakarta.com: the hero photo starts hidden on cream and fades in (1.2s ease-in-out) once the loader is gone, with a light zoom. After that, the logo, tagline and scroll mouse fade up in turn.
+- Phone hero follows MOBILE 1. The 589x1280 artboard is one phone screen, and sizes scale at 1 design px = 100vw/589:
+  - the hero is 88.75% of the screen height, so the intro text peeks below it as in the design;
+  - mouse, logo, tagline, title and intro text are sized and placed as in the design, within about 10px at 375x812;
+  - tagline text is kept at 8px minimum so it stays readable.
+- Hero image preload now picks the phone or desktop photo by screen width.
+
+### Added
+- Brown dashed line between the phone hero and the cream section, as in MOBILE 1.
+
+## [1.5.3] - 2026-11-27
+
+Developer: Achmad Yukrisna
+
+### Fixed
+- Desktop hero no longer cuts off the top of the glass on screens wider than 16:10 (such as 1920x940 and 1366x657). The glass used to hit the nav row. The photo focus moved from 66% to 22% from the top, so wide screens crop the bottom of the photo instead. At 1440x900 the hero still matches DESKTOP 1 exactly.
+
+## [1.5.2] - 2026-11-27
+
+Developer: Achmad Yukrisna
+
+### Changed
+- Photos now come from the client's original files (texture-assets folder) instead of the small images cut from the SVG designs:
+  - 15 gallery photos at 540x810;
+  - desktop hero;
+  - OOT banner background.
+- The phone hero uses its own photo (`hero-m.webp`). The 144px transparent strip at the bottom of the source PNG is cropped off.
+- Gallery photos 13-15 are the client's new shots (iced coffee, strawberry soda, cream coffee).
+
+### Added
+- Spinning OOT logo on the OOT banner (`assets/v2/oot-spin.webp`, with `.gif` fallback). It is cropped and shrunk to about 330 KB. The small OOT logos on the Shopee/Tokopedia/Tiktokshop cards stay static.
+
+## [1.5.1] - 2026-11-27
+
+Developer: Achmad Yukrisna
+
+### Changed
+- Hero logo is now the spinning texture logo GIF (`assets/v2/logo-spin.webp`, with `.gif` fallback), cropped and shrunk from 9 MB to about 680 KB.
+- Animations in the style of uniongroupjakarta.com/brands/union:
+  - the hero photo zooms in from 1.2x to 1x;
+  - the logo, tagline and scroll mouse fade up;
+  - nav links get an underline that sweeps in;
+  - Selections/Reach/Features buttons and the Shopee/Tokopedia/Tiktokshop cards fill brown from the side on hover, and the text turns cream.
+
+### Added
+- Loading screen: brown background with a blinking texture logo. It fades out after the page loads.
+- Scroll reveal: the intro text, gallery photos, button groups, OOT banner and footer fade up 10px in sequence as they come into view.
+- Reduced-motion users get no loader and no animations.
+
+### Fixed
+- Footer address: "01 Dr. Wahidin Street, Kediri".
+
+## [1.5.0] - 2026-11-27
+
+Developer: Achmad Yukrisna
+
+### Changed
+- New design from the MOBILE 1-3 and DESKTOP 1-3 files. One home page (`/`) for both phone and desktop, cream (#fff9f1) and brown (#592622) palette, Courier text.
+- Full-screen hero with the latte photo, "TEXTURE COFFEE" title, dashed line, scroll mouse, white texture logo and tagline. Desktop shows the nav row: Selection, Reach, Features, OOT Store.
+- After the hero, the header turns cream with a brown dashed line and stays at the top.
+- Selections (Menu, Frugal Treats), Reach (Reservations, Location) and Features (Grand Tex Avenue, Textunes) as framed buttons with shadow. Three boxed columns on desktop, two buttons per row on phone.
+- Menu and Frugal Treats viewer restyled to the new palette.
+- `/menu/` now redirects to `/#selections`.
+
+### Added
+- Intro text about Texture Coffee in Kediri.
+- Gallery of 15 photos from the design, with left/right arrow buttons.
+- OutOfTex section: black-and-white photo, OOT logo, and Shopee / Tokopedia / Tiktokshop cards. Cards sit on the photo on desktop and below it on phone.
+- Footer with tagline, address (links to Maps), Instagram and TikTok.
+- Design assets in `assets/v2/`.
+
+### Removed
+- Old linktree layout (avatar, Home/Shop tabs, share button) and the old desktop menu page.
+
 ## [1.4.4] - 2026-11-24
 
 Developer: Achmad Yukrisna
