@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.5.7] - 2026-11-27
+
+Developer: Achmad Yukrisna
+
+### Fixed
+- Hero fade-in was invisible in 1.5.6 because it faded from a dark base into a dark photo. It fades from the cream base again, like Union.
+- The hero starts fading in 250ms after the loader begins to disappear, so the loader no longer hides the fade.
+
 ## [1.5.6] - 2026-11-27
 
 Developer: Achmad Yukrisna

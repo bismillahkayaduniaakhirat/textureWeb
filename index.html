@@ -78,7 +78,7 @@
     background: url(/assets/v2/hero.webp) center 22% / cover no-repeat; /* fokus ke gelas: layar lebar memotong bawah, bukan atas */
   }
   /* Muncul pertama kali ala Union: foto memudar masuk dari latar krem setelah loader hilang */
-  .anim .hero { background: #1f1a16; }
+  .anim .hero { background: var(--cream); }
   .anim .hero-bg, .anim .hero::before { opacity: 0; transition: opacity 1.8s ease-in-out; }
   .anim .hero.ready .hero-bg, .anim .hero.ready::before { opacity: 1; }
   .anim .hero.ready { background: #111; transition: background-color 1.8s ease-in-out; }
@@ -422,7 +422,12 @@
   // Loader: logo berkedip di atas latar cokelat, hilang setelah halaman siap
   const loader = document.getElementById('loader');
   const heroEl = document.getElementById('top');
-  const hideLoader = () => { loader.classList.add('done'); heroEl.classList.add('ready'); };
+  let shown = false;
+  const hideLoader = () => {
+    if (shown) return; shown = true;
+    loader.classList.add('done');
+    setTimeout(() => heroEl.classList.add('ready'), 250); /* foto mulai memudar setelah loader hilang, supaya fade-nya terlihat */
+  };
   if (document.readyState === 'complete') setTimeout(hideLoader, 400);
   else addEventListener('load', () => setTimeout(hideLoader, 400));
   setTimeout(hideLoader, 3000);
