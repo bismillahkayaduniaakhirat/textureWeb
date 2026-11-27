@@ -7,7 +7,8 @@
 <meta name="description" content="Texture Coffee, Kediri — Feel the Pleasure in Every Texture. Menu, Frugal Treats, reservasi, lokasi, Grand Tex Avenue, Textunes, dan OutOfTex Store.">
 <meta name="theme-color" content="#fff9f1">
 <link rel="icon" href="/assets/logo.gif">
-<link rel="preload" as="image" href="/assets/v2/hero.webp">
+<link rel="preload" as="image" href="/assets/v2/hero.webp" media="(min-width: 900px)">
+<link rel="preload" as="image" href="/assets/v2/hero-m.webp" media="(max-width: 899px)">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Courier+Prime:wght@400;700&family=Source+Sans+3:wght@400;600&display=swap" rel="stylesheet">
@@ -76,7 +77,11 @@
     position: absolute; inset: 0; z-index: -2;
     background: url(/assets/v2/hero.webp) center 22% / cover no-repeat; /* fokus ke gelas: layar lebar memotong bawah, bukan atas */
   }
-  .anim .hero-bg { animation: zoomInSm 1.2s cubic-bezier(.76,0,.24,1) .2s both; }
+  /* Muncul pertama kali ala Union: foto memudar masuk dari latar krem setelah loader hilang */
+  .anim .hero { background: var(--cream); }
+  .anim .hero-bg, .anim .hero::before { opacity: 0; transition: opacity 1.2s ease-in-out; }
+  .anim .hero.ready .hero-bg, .anim .hero.ready::before { opacity: 1; }
+  .anim .hero.ready .hero-bg { animation: zoomInSm 1.6s cubic-bezier(.76,0,.24,1) both; }
   @keyframes zoomInSm { from { transform: scale(1.2); } to { transform: scale(1); } }
   .hero::before { /* vignette */
     content: ""; position: absolute; inset: 0; z-index: -1;
@@ -93,10 +98,10 @@
   @keyframes bob { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(8px); } }
   @keyframes wheel { 0% { opacity: 1; transform: translateY(0); } 70% { opacity: 0; transform: translateY(12px); } 100% { opacity: 0; } }
   .hero .logo { display: block; width: 104px; height: auto; margin-bottom: 20px; }
-  .anim .hero .mouse, .anim .hero .logo, .anim .hero .tagline { opacity: 0; animation: heroIn .9s cubic-bezier(.25,.46,.45,.94) both; }
-  .anim .hero .logo { animation-delay: .9s; }
-  .anim .hero .tagline { animation-delay: 1.05s; }
-  .anim .hero .mouse { animation: heroIn .9s cubic-bezier(.25,.46,.45,.94) 1.2s both, bob 1.8s ease-in-out 2.1s infinite; }
+  .anim .hero .mouse, .anim .hero .logo, .anim .hero .tagline { opacity: 0; animation: none; }
+  .anim .hero.ready .logo { animation: heroIn .9s cubic-bezier(.25,.46,.45,.94) .6s both; }
+  .anim .hero.ready .tagline { animation: heroIn .9s cubic-bezier(.25,.46,.45,.94) .75s both; }
+  .anim .hero.ready .mouse { animation: heroIn .9s cubic-bezier(.25,.46,.45,.94) .9s both, bob 1.8s ease-in-out 1.8s infinite; }
   @keyframes heroIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
   .tagline { font-size: 12px; letter-spacing: .04em; }
 
@@ -224,7 +229,7 @@
   .strip img:hover { filter: brightness(1.08) contrast(1.04); }
   @media (prefers-reduced-motion: reduce) {
     .loader { display: none; }
-    .anim .hero-bg, .anim .hero .mouse, .anim .hero .logo, .anim .hero .tagline { animation: none; opacity: 1; }
+    .anim .hero-bg, .anim .hero::before, .anim .hero .mouse, .anim .hero .logo, .anim .hero .tagline { animation: none; opacity: 1; transition: none; }
     .anim .reveal { opacity: 1; transform: none; transition: none; }
     .strip { scroll-behavior: auto; }
   }
@@ -232,18 +237,24 @@
   /* ---------- HP ---------- */
   @media (max-width: 899px) {
     :root { --head-h: 70px; }
-    .head .brand { padding: 16px 16px 12px; font-size: 14px; line-height: 1.25; }
+    /* Ukuran HP mengikuti MOBILE 1: artboard 589x1280 = satu layar, 1px desain = 100vw/589 */
+    .head .brand { padding: 6.9vw 16px 3vw; font-size: max(10px, 2.72vw); line-height: 1.25; }
     .head .brand br { display: inline; }
     .head .nav { display: none; }
     .head:not(.solid) .dash { opacity: 0; }
-    .hero { padding-bottom: 7vh; }
+    .hero { height: 88.75vh; height: 88.75svh; min-height: 0; padding-bottom: 10.6vw; } /* teks intro mengintip di bawah, seperti desain */
     .hero-bg { background-image: url(/assets/v2/hero-m.webp); background-position: center; }
-    .mouse { margin-bottom: 36px; }
-    .hero .logo { width: 84px; margin-bottom: 14px; }
-    .tagline { font-size: 10px; }
+    .hero::after { /* garis putus-putus di batas hero dan krem, seperti MOBILE 1 */
+      content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 2px;
+      background: repeating-linear-gradient(90deg, var(--brown) 0 12px, transparent 12px 20px);
+    }
+    .mouse { width: 4.24vw; height: 7.13vw; min-width: 16px; min-height: 27px; border-width: 1.5px; padding-top: 1.36vw; margin-bottom: 7.5vw; }
+    .mouse span { width: 2.04vw; height: 1.36vw; min-width: 7px; min-height: 5px; }
+    .hero .logo { width: 15.1vw; margin-bottom: 1.8vw; }
+    .hero .tagline { font-size: max(8px, 1.53vw); }
 
-    .intro { padding: 72px 20px 40px; }
-    .intro p { font-size: 14px; }
+    .intro { padding: 5.3vw 20px 40px; }
+    .intro p { font-size: max(12px, 3.06vw); }
     .strip { gap: 10px; }
     .strip img { width: 40vw; }
     .ctrl { margin-top: 24px; gap: 24px; }
@@ -392,7 +403,8 @@
 <script>
   // Loader: logo berkedip di atas latar cokelat, hilang setelah halaman siap
   const loader = document.getElementById('loader');
-  const hideLoader = () => loader.classList.add('done');
+  const heroEl = document.getElementById('top');
+  const hideLoader = () => { loader.classList.add('done'); heroEl.classList.add('ready'); };
   if (document.readyState === 'complete') setTimeout(hideLoader, 400);
   else addEventListener('load', () => setTimeout(hideLoader, 400));
   setTimeout(hideLoader, 3000);

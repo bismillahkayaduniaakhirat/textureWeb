@@ -1,5 +1,20 @@
 # Changelog
 
+## [1.5.4] - 2026-11-27
+
+Developer: Achmad Yukrisna
+
+### Changed
+- First-load hero effect now follows uniongroupjakarta.com: the hero photo starts hidden on cream and fades in (1.2s ease-in-out) once the loader is gone, with a light zoom. After that, the logo, tagline and scroll mouse fade up in turn.
+- Phone hero follows MOBILE 1. The 589x1280 artboard is one phone screen, and sizes scale at 1 design px = 100vw/589:
+  - the hero is 88.75% of the screen height, so the intro text peeks below it as in the design;
+  - mouse, logo, tagline, title and intro text are sized and placed as in the design, within about 10px at 375x812;
+  - tagline text is kept at 8px minimum so it stays readable.
+- Hero image preload now picks the phone or desktop photo by screen width.
+
+### Added
+- Brown dashed line between the phone hero and the cream section, as in MOBILE 1.
+
 ## [1.5.3] - 2026-11-27
 
 Developer: Achmad Yukrisna
