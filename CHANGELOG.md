@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.5.3] - 2026-11-27
+
+Developer: Achmad Yukrisna
+
+### Fixed
+- Desktop hero no longer cuts off the top of the glass on screens wider than 16:10 (such as 1920x940 and 1366x657). The glass used to hit the nav row. The photo focus moved from 66% to 22% from the top, so wide screens crop the bottom of the photo instead. At 1440x900 the hero still matches DESKTOP 1 exactly.
+
 ## [1.5.2] - 2026-11-27
 
 Developer: Achmad Yukrisna
