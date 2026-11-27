@@ -1,5 +1,20 @@
 # Changelog
 
+## [1.5.2] - 2026-11-27
+
+Developer: Achmad Yukrisna
+
+### Changed
+- Photos now come from the client's original files (texture-assets folder) instead of the small images cut from the SVG designs:
+  - 15 gallery photos at 540x810;
+  - desktop hero;
+  - OOT banner background.
+- The phone hero uses its own photo (`hero-m.webp`). The 144px transparent strip at the bottom of the source PNG is cropped off.
+- Gallery photos 13-15 are the client's new shots (iced coffee, strawberry soda, cream coffee).
+
+### Added
+- Spinning OOT logo on the OOT banner (`assets/v2/oot-spin.webp`, with `.gif` fallback). It is cropped and shrunk to about 330 KB. The small OOT logos on the Shopee/Tokopedia/Tiktokshop cards stay static.
+
 ## [1.5.1] - 2026-11-27
 
 Developer: Achmad Yukrisna
