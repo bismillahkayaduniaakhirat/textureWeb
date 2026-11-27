@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.5.8] - 2026-11-27
+
+Developer: Achmad Yukrisna
+
+### Fixed
+- Desktop header matches DESKTOP 1. The dashed line moved down from y≈57 to y≈70, and the menu moved down about 20px.
+- Menu items (Selection, Reach, Features, OOT Store) sit at the same horizontal positions as in DESKTOP 1 (222 / 534 / 887 / 1214 of 1440). They scale relative to the screen centre on other widths.
+
 ## [1.5.7] - 2026-11-27
 
 Developer: Achmad Yukrisna

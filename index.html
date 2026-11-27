@@ -47,7 +47,7 @@
     transition: background .3s, color .3s, box-shadow .3s;
   }
   .head .brand {
-    display: block; padding: 22px 16px 16px;
+    display: block; padding: 28px 16px 23px; /* garis putus di y≈70, seperti DESKTOP 1 */
     font: 400 16px/1.2 var(--sans); letter-spacing: .02em;
   }
   .head .brand br { display: none; }
@@ -58,6 +58,15 @@
     transition: opacity .25s;
   }
   .head .nav a { justify-self: center; padding: 4px 0; position: relative; }
+  /* Posisi menu persis DESKTOP 1 (tengah teks 222/534/887/1214 dari 1440), relatif ke tengah layar */
+  @media (min-width: 900px) {
+    .head .nav { display: block; position: relative; max-width: none; height: 45px; padding: 0; }
+    .head .nav a { position: absolute; top: 18px; left: calc(50% + var(--x) * min(50%, 720px)); transform: translateX(-50%); white-space: nowrap; }
+    .head .nav a:nth-child(1) { --x: -.6917; }
+    .head .nav a:nth-child(2) { --x: -.2583; }
+    .head .nav a:nth-child(3) { --x: .2319; }
+    .head .nav a:nth-child(4) { --x: .6861; }
+  }
   .head .nav a::before { /* garis bawah menyapu, ala Union */
     content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 1.5px; background: currentColor;
     transform: scaleX(0); transform-origin: 100% 50%; transition: transform .35s cubic-bezier(.25,.46,.45,.94);
