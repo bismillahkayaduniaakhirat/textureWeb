@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.5.9] - 2026-11-27
+
+Developer: Achmad Yukrisna
+
+### Changed
+- Release to production (main): the new design and every change from 1.5.0 to 1.5.8 go live on texturecoffee.id.
+- Checked before release: the Grand Tex Avenue button points to https://texturecoffee.id/grandtexavenue/ (live returns 200 through the Netlify rewrite in `_redirects`).
+
 ## [1.5.8] - 2026-11-27
 
 Developer: Achmad Yukrisna
