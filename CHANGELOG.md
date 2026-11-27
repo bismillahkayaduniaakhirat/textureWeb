@@ -1,5 +1,27 @@
 # Changelog
 
+## [1.5.0] - 2026-11-27
+
+Developer: Achmad Yukrisna
+
+### Changed
+- New design from the MOBILE 1-3 and DESKTOP 1-3 files. One home page (`/`) for both phone and desktop, cream (#fff9f1) and brown (#592622) palette, Courier text.
+- Full-screen hero with the latte photo, "TEXTURE COFFEE" title, dashed line, scroll mouse, white texture logo and tagline. Desktop shows the nav row: Selection, Reach, Features, OOT Store.
+- After the hero, the header turns cream with a brown dashed line and stays at the top.
+- Selections (Menu, Frugal Treats), Reach (Reservations, Location) and Features (Grand Tex Avenue, Textunes) as framed buttons with shadow. Three boxed columns on desktop, two buttons per row on phone.
+- Menu and Frugal Treats viewer restyled to the new palette.
+- `/menu/` now redirects to `/#selections`.
+
+### Added
+- Intro text about Texture Coffee in Kediri.
+- Gallery of 15 photos from the design, with left/right arrow buttons.
+- OutOfTex section: black-and-white photo, OOT logo, and Shopee / Tokopedia / Tiktokshop cards. Cards sit on the photo on desktop and below it on phone.
+- Footer with tagline, address (links to Maps), Instagram and TikTok.
+- Design assets in `assets/v2/`.
+
+### Removed
+- Old linktree layout (avatar, Home/Shop tabs, share button) and the old desktop menu page.
+
 ## [1.4.4] - 2026-11-24
 
 Developer: Achmad Yukrisna
