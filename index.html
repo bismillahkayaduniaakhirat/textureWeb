@@ -118,16 +118,14 @@
   .mouse {
     width: 25px; height: 42px; border: 2px solid #fff; border-radius: 13px;
     display: flex; justify-content: center; padding-top: 7px; margin-bottom: 44px;
-    animation: bob 1.8s ease-in-out infinite;
   }
-  .mouse span { width: 10px; height: 6px; border-radius: 6px 6px 2px 2px; background: #fff; animation: wheel 1.8s ease-in-out infinite; }
-  @keyframes bob { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(8px); } }
-  @keyframes wheel { 0% { opacity: 1; transform: translateY(0); } 70% { opacity: 0; transform: translateY(12px); } 100% { opacity: 0; } }
+  .mouse span { width: 10px; height: 6px; border-radius: 6px 6px 2px 2px; background: #fff; animation: wheel 1.6s ease-in-out infinite; } /* bingkai diam, titik kecil naik-turun */
+  @keyframes wheel { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(170%); } }
   .hero .logo { display: block; width: 104px; height: auto; margin-bottom: 20px; }
   .anim .hero .mouse, .anim .hero .logo, .anim .hero .tagline { opacity: 0; animation: none; }
   .anim .hero.ready .logo { animation: heroIn .9s cubic-bezier(.25,.46,.45,.94) .6s both; }
   .anim .hero.ready .tagline { animation: heroIn .9s cubic-bezier(.25,.46,.45,.94) .75s both; }
-  .anim .hero.ready .mouse { animation: heroIn .9s cubic-bezier(.25,.46,.45,.94) .9s both, bob 1.8s ease-in-out 1.8s infinite; }
+  .anim .hero.ready .mouse { animation: heroIn .9s cubic-bezier(.25,.46,.45,.94) .9s both; }
   @keyframes heroIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
   .tagline { font-size: 12px; letter-spacing: .04em; }
 
@@ -241,7 +239,7 @@
 
   /* ---------- Animasi ala Union: loader + muncul saat discroll ---------- */
   .loader {
-    position: fixed; inset: 0; z-index: 100; background: var(--brown);
+    position: fixed; inset: 0; z-index: 100; background: #601708; /* merah opening dari klien */
     display: grid; place-items: center; transition: opacity .6s cubic-bezier(.25,.46,.45,.94), visibility .6s;
     animation: loaderOut .6s 4s forwards; /* cadangan kalau JS gagal */
   }
@@ -270,9 +268,9 @@
     .head:not(.solid) .dash { opacity: 0; }
     .hero { height: 88.75vh; height: 88.75svh; min-height: 0; padding-bottom: 10.6vw; } /* teks intro mengintip di bawah, seperti desain */
     .hero-bg { background-image: url(/assets/v2/hero-m.webp); background-position: center; }
-    .hero::after { /* garis putus-putus di batas hero dan krem, seperti MOBILE 1 */
+    .hero::after { /* garis putus-putus di batas bawah hero: krem di atas foto; setelah discroll garis header jadi merah */
       content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 2px;
-      background: repeating-linear-gradient(90deg, var(--brown) 0 12px, transparent 12px 20px);
+      background: repeating-linear-gradient(90deg, var(--cream) 0 12px, transparent 12px 20px);
     }
     .mouse { width: 4.24vw; height: 7.13vw; min-width: 16px; min-height: 27px; border-width: 1.5px; padding-top: 1.36vw; margin-bottom: 7.5vw; }
     .mouse span { width: 2.04vw; height: 1.36vw; min-width: 7px; min-height: 5px; }

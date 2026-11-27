@@ -1,5 +1,14 @@
 # Changelog
 
+## [1.5.10] - 2026-11-27
+
+Developer: Achmad Yukrisna
+
+### Changed
+- Opening loader background is now the client's red #601708, instead of brown #592622.
+- Phone: the dashed line at the bottom of the hero is cream. After you scroll past the hero, the header shows its dashed line in red-brown.
+- Scroll mouse icon: the frame stays still, and only the small dot inside moves up and down.
+
 ## [1.5.9] - 2026-11-27
 
 Developer: Achmad Yukrisna
