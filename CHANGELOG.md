@@ -1,5 +1,15 @@
 # Changelog
 
+## [1.5.5] - 2026-11-27
+
+Developer: Achmad Yukrisna
+
+### Changed
+- Hero no longer looks over-zoomed on very wide screens (for example 2000x742). On screens wider than 16:10, the photo shows whole at screen height, framed like DESKTOP 1. The left and right edges fade into dark.
+
+### Removed
+- Hero zoom animation (1.2x to 1x). The first load is now only the Union-style fade-in, as on uniongroupjakarta.com.
+
 ## [1.5.4] - 2026-11-27
 
 Developer: Achmad Yukrisna

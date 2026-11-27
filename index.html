@@ -81,8 +81,16 @@
   .anim .hero { background: var(--cream); }
   .anim .hero-bg, .anim .hero::before { opacity: 0; transition: opacity 1.2s ease-in-out; }
   .anim .hero.ready .hero-bg, .anim .hero.ready::before { opacity: 1; }
-  .anim .hero.ready .hero-bg { animation: zoomInSm 1.6s cubic-bezier(.76,0,.24,1) both; }
-  @keyframes zoomInSm { from { transform: scale(1.2); } to { transform: scale(1); } }
+  .anim .hero.ready { background: #111; transition: background-color 1.2s ease-in-out; }
+  /* Layar lebih lebar dari 16:10: foto utuh setinggi layar seperti DESKTOP 1, sisi memudar ke gelap */
+  @media (min-width: 900px) and (min-aspect-ratio: 1601/1000) {
+    .hero-bg {
+      left: 50%; right: auto; width: 160vh; width: 160svh; transform: translateX(-50%);
+      background-size: 100% 100%; background-position: center;
+      -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 9%, #000 91%, transparent 100%);
+      mask-image: linear-gradient(90deg, transparent 0, #000 9%, #000 91%, transparent 100%);
+    }
+  }
   .hero::before { /* vignette */
     content: ""; position: absolute; inset: 0; z-index: -1;
     background:
