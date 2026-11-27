@@ -1,5 +1,16 @@
 # Changelog
 
+## [1.5.6] - 2026-11-27
+
+Developer: Achmad Yukrisna
+
+### Changed
+- On screens wider than 16:10, the areas left and right of the hero photo are now filled with the same photo, blurred and dimmed (ambient), instead of plain black. The edge fade is widened to 14%.
+- The hero fade-in is longer (1.8s) so it reads more clearly, like Union.
+
+### Fixed
+- Cream/white bands on the left and right during the fade-in after a refresh. The hero base is now dark from the start, and the blur layer is larger so its soft edge stays off screen.
+
 ## [1.5.5] - 2026-11-27
 
 Developer: Achmad Yukrisna

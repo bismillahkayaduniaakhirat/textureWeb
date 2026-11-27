@@ -78,17 +78,26 @@
     background: url(/assets/v2/hero.webp) center 22% / cover no-repeat; /* fokus ke gelas: layar lebar memotong bawah, bukan atas */
   }
   /* Muncul pertama kali ala Union: foto memudar masuk dari latar krem setelah loader hilang */
-  .anim .hero { background: var(--cream); }
-  .anim .hero-bg, .anim .hero::before { opacity: 0; transition: opacity 1.2s ease-in-out; }
+  .anim .hero { background: #1f1a16; }
+  .anim .hero-bg, .anim .hero::before { opacity: 0; transition: opacity 1.8s ease-in-out; }
   .anim .hero.ready .hero-bg, .anim .hero.ready::before { opacity: 1; }
-  .anim .hero.ready { background: #111; transition: background-color 1.2s ease-in-out; }
-  /* Layar lebih lebar dari 16:10: foto utuh setinggi layar seperti DESKTOP 1, sisi memudar ke gelap */
+  .anim .hero.ready { background: #111; transition: background-color 1.8s ease-in-out; }
+  .hero-amb { display: none; }
+  /* Layar lebih lebar dari 16:10: foto utuh setinggi layar seperti DESKTOP 1,
+     sisi kiri-kanan diisi foto yang sama versi blur (ambient) supaya warnanya menyambung */
   @media (min-width: 900px) and (min-aspect-ratio: 1601/1000) {
+    .hero-amb {
+      display: block; position: absolute; inset: -140px; z-index: -3;
+      background: url(/assets/v2/hero.webp) center / cover no-repeat;
+      filter: blur(36px) saturate(1.15) brightness(.72);
+    }
+    .anim .hero-amb { opacity: 0; transition: opacity 1.8s ease-in-out; }
+    .anim .hero.ready .hero-amb { opacity: 1; }
     .hero-bg {
       left: 50%; right: auto; width: 160vh; width: 160svh; transform: translateX(-50%);
       background-size: 100% 100%; background-position: center;
-      -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 9%, #000 91%, transparent 100%);
-      mask-image: linear-gradient(90deg, transparent 0, #000 9%, #000 91%, transparent 100%);
+      -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 14%, #000 86%, transparent 100%);
+      mask-image: linear-gradient(90deg, transparent 0, #000 14%, #000 86%, transparent 100%);
     }
   }
   .hero::before { /* vignette */
@@ -237,7 +246,7 @@
   .strip img:hover { filter: brightness(1.08) contrast(1.04); }
   @media (prefers-reduced-motion: reduce) {
     .loader { display: none; }
-    .anim .hero-bg, .anim .hero::before, .anim .hero .mouse, .anim .hero .logo, .anim .hero .tagline { animation: none; opacity: 1; transition: none; }
+    .anim .hero-bg, .anim .hero-amb, .anim .hero::before, .anim .hero .mouse, .anim .hero .logo, .anim .hero .tagline { animation: none; opacity: 1; transition: none; }
     .anim .reveal { opacity: 1; transform: none; transition: none; }
     .strip { scroll-behavior: auto; }
   }
@@ -306,6 +315,7 @@
 </header>
 
 <section class="hero" id="top">
+  <div class="hero-amb" aria-hidden="true"></div>
   <div class="hero-bg" aria-hidden="true"></div>
   <a class="mouse" href="#intro" aria-label="Scroll ke bawah"><span></span></a>
   <picture><source srcset="/assets/v2/logo-spin.webp" type="image/webp"><img class="logo" src="/assets/v2/logo-spin.gif" width="173" height="220" alt="Logo texture" fetchpriority="high"></picture>
